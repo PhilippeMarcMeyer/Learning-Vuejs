@@ -17,6 +17,7 @@
 		margin-top : 90px;
 		padding:10px 30px 10px 30px;
 	}
+	
 	div[id^="app"] p:nth-child(1) {
       font-weight: 500;
 	}
@@ -45,12 +46,36 @@
 		margin-bottom:10px;
 		overflow: auto;
 	}
-	li{
+	ol {
+		margin:3px 0px 10px 12px;
+	}
+	li div{
 		background-color: white;
 		width:600px;
-		margin:3px 0px 6px 2px;
+		margin:3px 0px 6px 12px;
+		cursor: pointer;
+		padding: 1px;
+		border-width: 1px;
+		border-style: inset;
+	}
+	form div {
+		margin-bottom:10px;
+	}	
+	form div label{
+		display: inline-block;
+		width:64px;
 	}
 	
+	form input{
+		width:500px;
+		height :30px;
+	}
+	
+	form textarea{
+		min-width:500px;
+		width:500px;
+		height :150px;
+	}
 	
 
 	  </style>
@@ -60,7 +85,7 @@
  <div id="main">
 
 	<div id="app-7">
-		<p>WorkList</p>
+		<p>Work-list</p>
 
   <ol>
     <!--
@@ -75,9 +100,16 @@
       v-bind:key="item.id"
     ></todo-item>
   </ol>
-  <label>Task : </label><input v-model="tempItem">&nbsp;<label>Notes : </label><input style="width:320px;" v-model="tempSubItem">
-  <button v-on:click="addItem">Add</button>
-  <p>{{ message }}</p>
+  <form>
+	<div>
+		<label>Task : </label><input v-model="tempItem">
+	</div>
+	<div>
+		<label>Notes : </label><textarea style="width:320px;" v-model="tempSubItem"></textarea>
+	</div>
+	<button v-on:click="addItem">{{btnAddTitle}}</button>
+	<p>{{ message }}</p>
+   </form>
 </div>
 
 </div>	

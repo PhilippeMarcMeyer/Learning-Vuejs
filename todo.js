@@ -3,7 +3,7 @@
 // Define a new component called todo-item
 Vue.component('todo-item', {
   props: ['todo'],
-  template: '<li>{{ todo.text }}<br /><span>{{ todo.subText }}</span></li>'
+  template: '<li><div v-bind:id="todo.id">{{ todo.text }}<br />{{ todo.subText }}</div></li>'
 })
 
 let toStorage = new storageList("todos");
@@ -14,10 +14,16 @@ var app7 = new Vue({
 	tempItem : '',
 	tempSubItem : '',
 	maxId : toStorage.getOffset(),
+	btnAddTitle: 'Add',
+	addMode : 'Add',
 	message:'',
     workList: toStorage.getList()
   },
     methods: {
+		updateMode : function(){
+			this.btnAddTitle = "Modify";
+			this.addMode = "Modify";
+		},
 		addItem: function () {
 			this.message = '';
 			if(this.tempItem !=''){
