@@ -2,7 +2,8 @@
  <head>
  <title>TODO Vue.js</title>
      <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
    <style>
   
     body {
@@ -46,20 +47,46 @@
 		margin-bottom:10px;
 		overflow: auto;
 	}
-	ol {
+	ul {
 		margin:3px 0px 10px 12px;
+		 list-style: none;
 	}
 	li div{
-		background-color: white;
-		width:600px;
-		margin:3px 0px 6px 12px;
+		width:50%;
+		min-width:400px;
+		max-width:600px;
 		cursor: pointer;
-		padding: 1px;
-		border-width: 1px;
-		border-style: inset;
+		border: solid 1px grey;
+		padding: 5px 2px 5px 8px;
+		margin: 7px 0px 8px 10px;
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		background-color: #fff;
+		background: linear-gradient(#ffffff, #e9e9e9);
+		color: black;
+		border-radius: 8px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	li.inactive{
+	 opacity: 0.3;
+	}
+	
+	form{
+		margin-top:20px;
+	    position:relative;
+	 	width:60%;
+		min-width:450px;
+		max-width:650px;
+		margin-left:60px;
 	}
 	form div {
 		margin-bottom:10px;
+		width:80%;
+		min-width:400px;
+		max-width:600px;
 	}	
 	form div label{
 		display: inline-block;
@@ -67,16 +94,54 @@
 	}
 	
 	form input{
-		width:500px;
-		height :30px;
+		 width: calc(100% - 80px);
+		 min-width:320px;
+		 height :30px;
+
 	}
 	
 	form textarea{
-		min-width:500px;
-		width:500px;
-		height :150px;
+		 width: calc(100% - 80px);
+		 min-width:320px;
+		height :100px;
+		resize: none;
+	}
+	button{
+	    -webkit-appearance: button;
+		touch-action: manipulation;
+		border: 1px solid transparent;
+		text-align: center;
+		white-space: nowrap;
+		vertical-align: middle;
+		font-weight: 400;
+		margin-bottom: 0;
+		padding: 5px 10px;
+		font-size: 12px;
+		line-height: 1.5;
+		border-radius: 3px;
+		text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+		box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+		background-repeat: repeat-x;
+
 	}
 	
+	.btn-blue{
+		background-color: #337ab7;
+		color: #fff;
+		border-color: #245580;
+		background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+	}
+	
+	.btn-right{
+	float:right;
+	}
+		.btn-left{
+	float:left;
+	}
+	.icon-right{
+		float:right;
+		margin:8px;
+	}
 
 	  </style>
  </head>
@@ -87,7 +152,7 @@
 	<div id="app-7">
 		<p>Work-list</p>
 
-  <ol>
+  <ul>
     <!--
       Now we provide each todo-item with the todo object
       it's representing, so that its content can be dynamic.
@@ -99,15 +164,16 @@
       v-bind:todo="item"
       v-bind:key="item.id"
     ></todo-item>
-  </ol>
+  </ul>
   <form>
 	<div>
-		<label>Task : </label><input v-model="tempItem">
+		<label>Task : </label><input id="toDoTitle" v-model="toDoTitle">
 	</div>
 	<div>
-		<label>Notes : </label><textarea style="width:320px;" v-model="tempSubItem"></textarea>
+		<label>Notes : </label><textarea id="toDoSummary" v-model="toDoSummary"></textarea>
 	</div>
-	<button v-on:click="addItem">{{btnAddTitle}}</button>
+	<button class="btn-blue btn-right" v-on:click="addItem">{{btnAddTitle}}</button>
+	<button class="btn-blue btn-left" v-on:click="cancel">Cancel</button>
 	<p>{{ message }}</p>
    </form>
 </div>
