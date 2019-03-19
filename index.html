@@ -37,7 +37,7 @@
 	}
 	
 	div[id^="app"] {
-		background-color:#eee;
+		background-color:#fff;
 		min-height:100px;
 		padding: 6px 0px 6px 30px;
 		line-height: 1.6em;
@@ -75,11 +75,17 @@
 	}
 	
 	form{
+		background-color: #fff;
+		background: linear-gradient(#ffffff, #efefef);
+		padding: 15px 2px 30px 8px;
+		margin: 7px 0px 0px 10px;
 		margin-top:20px;
+		border-radius: 8px;
 	    position:relative;
-	 	width:60%;
-		min-width:450px;
-		max-width:650px;
+		border: solid 1px grey;
+		width:48%;
+		min-width:400px;
+		max-width:600px;
 		margin-left:60px;
 	}
 	form div {
@@ -94,19 +100,20 @@
 	}
 	
 	form input{
+		font-family : Roboto, Helvetica, Arial;
 		 width: calc(100% - 80px);
 		 min-width:320px;
 		 height :30px;
-
 	}
 	
 	form textarea{
-		 width: calc(100% - 80px);
-		 min-width:320px;
+		font-family : Roboto, Helvetica, Arial;
+		width: calc(100% - 80px);
+		min-width:320px;
 		height :100px;
 		resize: none;
 	}
-	button{
+	form button{
 	    -webkit-appearance: button;
 		touch-action: manipulation;
 		border: 1px solid transparent;
@@ -115,14 +122,15 @@
 		vertical-align: middle;
 		font-weight: 400;
 		margin-bottom: 0;
-		padding: 5px 10px;
-		font-size: 12px;
+		padding: 5px 14px;
+		min-width:100px;
+		font-size: 13px;
 		line-height: 1.5;
 		border-radius: 3px;
 		text-shadow: 0 -1px 0 rgba(0,0,0,.2);
 		box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
 		background-repeat: repeat-x;
-
+		
 	}
 	
 	.btn-blue{
@@ -133,10 +141,11 @@
 	}
 	
 	.btn-right{
-	float:right;
+		float:right;
+		margin-right:5px;
 	}
-		.btn-left{
-	float:left;
+	.btn-left{
+		float:left;
 	}
 	.icon-right{
 		float:right;
@@ -146,11 +155,10 @@
 	  </style>
  </head>
  <body>
- 	<div class="title">TODO Vue.js</div>
+ 	<div class="title">TODO List :</div>
  <div id="main">
 
 	<div id="app-7">
-		<p>Work-list</p>
 
   <ul>
     <!--
