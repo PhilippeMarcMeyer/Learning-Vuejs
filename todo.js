@@ -1,14 +1,13 @@
 
-
 Vue.component('todo-item', {
   props: ['todo'],
   template: `<li v-bind:class="{inactive: todo.done}" >
 				<div v-bind:id="todo.id" @click="handleClick(todo.id)" v-bind:class="{'noDrop':todo.done}" :draggable="!todo.done" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
-					{{ todo.toDoTitle }}
+					<b>{{ todo.toDoTitle }}</b>
 					<i class="fa fa-trash icon-right" @click="handleTrash(todo.id)"></i>
 					<i v-bind:class="{'fa-eye': todo.done,'fa-eye-slash': !todo.done}" class="fa icon-right" @click="handleHide(todo.id)"></i>
 					<br />
-					{{ todo.toDoSummary }}
+					<span class='pre'>{{ todo.toDoSummary }}</span>
 				</div>
 			</li>`,
  methods: {
@@ -27,9 +26,7 @@ Vue.component('todo-item', {
 		event.stopPropagation();
     }
   }
-
 })
-
 let toStorage = new storageList("todos");
 var app7 = new Vue({
   el: '#app-7',
@@ -70,7 +67,6 @@ var app7 = new Vue({
 				this.toStorage.changeOrders([{id:sourceId,order:destOrder},{id:targetId,order:srcOrder}],"id","order");
 				this.workListRaw = toStorage.getList();
 		
-
 			}
 		},
 		itemTrash:function(){
@@ -121,7 +117,7 @@ var app7 = new Vue({
 				});
 				if(data.length > 0){
 					this.toDoTitle = data[0].toDoTitle;
-					this.toDoSummary  = data[0].toDoSummary;
+					this.toDoSummary  = toTextArea(data[0].toDoSummary);
 					this.btnAddTitle = "Modify";
 					this.addMode = "modify";
 				}
@@ -153,24 +149,19 @@ var app7 = new Vue({
 					if(oldToDo!=null){
 						this.toStorage.add(oldToDo,"id");
 					}
-
 					this.cancel();
 				}
 			}
-
 			}else{
 				this.message = 'Didn\'t get what you want !';
 			}
 		}
 	}
 })
-
-
 function storageList(listName){
 	this.name = listName;
 	this.storageOK=(typeof(Storage) !== "undefined");
 	this.listArr = [];
-
 	this.init = function(){
 		if (localStorage.getItem(listName)== null)
 			localStorage[listName]= JSON.stringify(this.listArr);
@@ -203,7 +194,6 @@ function storageList(listName){
 			}			
 		}
 	}
-
 	this.add=function(data,key){
 		if(this.storageOK){
 			if (localStorage.getItem(this.name)!= null){
@@ -262,22 +252,17 @@ function storageList(listName){
 	this.getList=function(){
 		if (localStorage.getItem(this.name)!= null){
 			this.listArr= JSON.parse(localStorage[this.name]);
-
 		}
 		return this.listArr;
 	}
 	this.init();
 }
-
 function allowDrop(ev) {
   ev.preventDefault();
 }
-
 function drag(ev) {
-
   ev.dataTransfer.setData("text/plain", ev.target.id);
 }
-
 function drop(ev) {
   ev.preventDefault();
   let source = ev.dataTransfer.getData("text");
@@ -287,7 +272,8 @@ function drop(ev) {
 	  app7.inverse(source,target);
   }  
   }
-
-
-
+}
+function toTextArea(input) {
+    var newline = String.fromCharCode(13, 10);
+	return input.replace(/(\r\n|\n|\r)/gm,newline.toString());
 }
