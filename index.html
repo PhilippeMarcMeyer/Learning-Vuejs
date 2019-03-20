@@ -23,6 +23,7 @@
 			  v-bind:key="item.id"
 			></todo-item>
 		  </ul>
+
 		  <form>
 			<div>
 				<label>Task : </label><input id="toDoTitle" v-model="toDoTitle">
@@ -33,9 +34,20 @@
 			<button class="btn-blue btn-right" v-on:click="addItem">{{btnAddTitle}}</button>
 			<button class="btn-blue btn-left" v-on:click="cancel">Cancel</button>
 			<p>{{ message }}</p>
+
 		   </form>
+		    <form style="background-color:white;background:white;border:none;">
+		  		<button class="btn-red btn-right" onclick="saveToFile()">Save to file</button>
+				<a id='btnOpen'  href='#' ><button class="btn-red btn-right">Import from file</button></a>
+				
+				<textarea id='tbMain' style="display:none"></textarea>
+
+			</form>
 		</div>
 	</div>	
+	
+
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script type="text/javascript" src="todo.js"></script>
  </body>

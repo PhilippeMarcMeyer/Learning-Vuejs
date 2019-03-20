@@ -235,9 +235,9 @@ function storageList(listName){
 	}
 	this.addall=function(arr){
 		this.removeall();
-		for(var i = 0; i < arr.length;i++){
-			this.add(arr[i]);
-		}
+		this.listArr = arr;
+		localStorage[this.name] = JSON.stringify(this.listArr);				
+
 	}
 	this.removeall=function(){
 		 localStorage.removeItem(this.name);
@@ -276,4 +276,82 @@ function drop(ev) {
 function toTextArea(input) {
     var newline = String.fromCharCode(13, 10);
 	return input.replace(/(\r\n|\n|\r)/gm,newline.toString());
+}
+
+function saveToFile(){
+ let workList = JSON.stringify(app7.workList);	
+	download(workList,"todoList_"+Date.now()+".json",'text/plain');
+}
+
+function download(data, filename, type) {
+	//from https://stackoverflow.com/questions/13405129/javascript-create-and-save-file
+	// by https://stackoverflow.com/users/1458751/kanchu
+    var file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+        url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
+    }
+}
+
+
+//https://stackoverflow.com/questions/13709482/how-to-read-text-file-in-javascript
+// from https://stackoverflow.com/users/4718434/yaya-pro
+
+function openFile(callBack){
+  var element = document.createElement('input');
+  element.setAttribute('type', "file");
+  element.setAttribute('id', "btnOpenFile");
+  element.onchange = function(){
+      readText(this,callBack);
+      document.body.removeChild(this);
+      }
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+}
+
+function readText(filePath,callBack) {
+    var reader;
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        reader = new FileReader();
+    } else {
+        alert('The File APIs are not fully supported by your browser. Fallback required.');
+        return false;
+    }
+    var output = ""; //placeholder for text output
+    if(filePath.files && filePath.files[0]) {           
+        reader.onload = function (e) {
+            output = e.target.result;
+            callBack(output);
+        };//end onload()
+        reader.readAsText(filePath.files[0]);
+    }//end if html5 filelist support
+    else { //this is where you could fallback to Java Applet, Flash or similar
+        return false;
+    }       
+    return true;
+}
+
+document.getElementById('btnOpen').onclick = function(){
+    openFile(function(txt){
+        document.getElementById('tbMain').value = toTextArea(txt); 
+			let json = JSON.parse(document.getElementById('tbMain').value );
+			app7.workList.workList = json;
+			app7.toStorage.addall(json);
+			setTimeout(function(){
+				document.location.reload(true);
+			},500);
+    });
 }

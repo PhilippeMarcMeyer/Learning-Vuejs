@@ -63,7 +63,7 @@
 		overflow: hidden;
 	}	
 	
-		form{
+	form{
 		background-color: #fff;
 		background: linear-gradient(#ffffff, #efefef);
 		padding: 15px 2px 30px 8px;
@@ -109,6 +109,8 @@
 		resize: none;
 	}	
 	form button{
+		text-decoration:none;
+		display:inline-block;
 	    -webkit-appearance: button;
 		touch-action: manipulation;
 		border: 1px solid transparent;
@@ -126,13 +128,20 @@
 		box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
 		background-repeat: repeat-x;
 	}	
+	.btn-red{
+		background-color: #b7337a;
+		color: #fff;
+		border-color: #802455;
+		/*background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);*/
+		background: linear-gradient(#A46D8F,#642D4F);
+
+	}	
 	.btn-blue{
 		background-color: #337ab7;
 		color: #fff;
 		border-color: #245580;
 		/*background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);*/
 		background: linear-gradient(#6D8FA4,#2D4F64);
-
 	}	
 	.btn-right{
 		float:right;
@@ -231,3 +240,5 @@
 		}
 	
 	}
+	
+	#a { display: none; }
