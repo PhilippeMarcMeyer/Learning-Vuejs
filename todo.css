@@ -5,6 +5,7 @@
       color: black;
       overflow: auto;
 	  padding:0;
+	  margin:0;
     }	
 	#main{
 		margin-top : 90px;
@@ -17,10 +18,12 @@
 	  position:fixed;
       font-size: 22px;
       line-height: 24px;
-	  background: black;
+	  background-color: black;
+	  background: linear-gradient(#6D8FA4,#2D4F64);
       color: white;
 	  width:100%;
 	  padding:30px;
+	  margin:0;
 	  min-height:26px;
 	  top:0px;
 	  z-index: 2;
@@ -59,10 +62,8 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}	
-	li.inactive{
-	 opacity: 0.3;
-	}	
-	form{
+	
+		form{
 		background-color: #fff;
 		background: linear-gradient(#ffffff, #efefef);
 		padding: 15px 2px 30px 8px;
@@ -82,6 +83,14 @@
 		min-width:400px;
 		max-width:600px;
 	}	
+	
+	
+
+	li.inactive{
+	 opacity: 0.3;
+	}	
+
+
 	form div label{
 		display: inline-block;
 		width:64px;
@@ -121,7 +130,9 @@
 		background-color: #337ab7;
 		color: #fff;
 		border-color: #245580;
-		background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+		/*background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);*/
+		background: linear-gradient(#6D8FA4,#2D4F64);
+
 	}	
 	.btn-right{
 		float:right;
@@ -137,4 +148,86 @@
 	.pre{
 	  white-space: pre;
 	  display: block;
+	}
+	
+		@media only screen and (min-width:601px) and (max-width:800px) {
+		#main{
+			margin-top : 90px;
+			padding:0;
+		}	
+		div[id^="app"] {
+			padding: 0;
+			margin: 0;
+			margin-bottom:10px;
+		}
+		li{
+			width:75%;
+		}	
+		li div{
+			width:100%;
+		}	
+		ul{
+			display:block;
+			width:inherit;
+			margin-left: 60px;
+			padding:0;
+			padding:5px 0 0px 5px;
+
+		}
+		form {
+			width:68.6%;
+			display:block;
+			marging:0;
+			margin-left: 75px;
+			padding:10px 0 30px 5px;
+		}
+
+		form div{
+			margin-left:20px;	
+		}
+
+	}
+	
+	@media only screen and (max-width:600px) {
+		#main{
+			margin-top : 90px;
+			padding:0;
+		}	
+		div[id^="app"] {
+			padding: 0;
+			margin: 0;
+			margin-bottom:10px;
+		}
+		li{
+			width:90%;
+						min-width: 340px;
+
+		}	
+		li div{
+			width:100%;
+						min-width: 340px;
+
+		}	
+		ul{
+			display:block;
+			width:inherit;
+			margin-left: 10px;
+			padding:0;
+			padding:5px 0 0px 5px;
+
+		}
+		form {
+			width:87%;
+			display:block;
+			margin:0;
+			margin-left: 25px;
+			padding:10px 0 30px 10px;
+			min-width: 340px;
+		}
+
+		form div{
+			margin-left:5px;	
+			min-width: 340px;
+		}
+	
 	}
