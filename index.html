@@ -5,6 +5,8 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" href="todo.css">
+	
+
  </head>
  <body>
  	<div class="title">TODO List :</div>
@@ -31,24 +33,23 @@
 			<div>
 				<label>Notes : </label><textarea id="toDoSummary" v-model="toDoSummary"><pre></pre></textarea>
 			</div>
-			<button class="btn-blue btn-right" v-on:click="addItem">{{btnAddTitle}}</button>
+			<button class="btn-blue btn-right" onClick="add();">{{btnAddTitle}}</button><!--v-on:click="addItem"-->
 			<button class="btn-blue btn-left" v-on:click="cancel">Cancel</button>
 			<p>{{ message }}</p>
 
 		   </form>
-		    <form style="background-color:white;background:white;border:none;">
-		  		<button class="btn-red btn-right" onclick="saveToFile()">Save to file</button>
-				<a id='btnOpen'  href='#' ><button class="btn-red btn-right">Import from file</button></a>
-				
-				<textarea id='tbMain' style="display:none"></textarea>
-
-			</form>
 		</div>
 	</div>	
 	
+	  <!-- Vue -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script> 
+  <!-- Firebase -->
+ 	<script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+  <!-- VueFire -->
+  <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script> 
 
 
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script type="text/javascript" src="todo.js"></script>
+	<script type="text/javascript" src="fireStore.todo.js"></script>
  </body>
 </html>

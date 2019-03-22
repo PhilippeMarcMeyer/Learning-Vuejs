@@ -1,2 +1,2 @@
 # Learning-Vuejs
-Learning vue on my spare time
+This branch is dedicated to Vue and FireStore with the help of VueFire
