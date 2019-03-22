@@ -1,2 +1,2 @@
 # Learning-Vuejs
-Learning vue on my spare time
+Master is dedicated to learning Vue
