@@ -11,9 +11,31 @@
 		margin-top : 90px;
 		padding:10px 30px 10px 30px;
 	}	
+	.hidden{
+		display:none;
+	}
+	.shown{
+		display:block;
+	}
+	.children{
+		position: relative;
+		padding-right:8px;
+	}
+	.children span {
+		position: absolute;
+		font-size: 14px;
+		font-style: normal;
+		padding:0;
+		margin:0;
+		color : red;
+		text-align:right;
+		padding-left:2px;
+		width :16px;
+	}
 	div[id^="app"] p:nth-child(1) {
       font-weight: 500;
-	}	
+	}
+	
 	div.title {
 	  position:fixed;
       font-size: 22px;
@@ -62,6 +84,37 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}	
+	li div.subTask{
+		width:70%;
+		float:right;
+		font-size:12px;
+		margin-right:10px;
+		padding: 2px 2px 1px 4px;
+	}
+	
+	li div.subTask p{
+		margin:0;
+	}
+	
+	li div.subTask label{
+		display: inline-block;
+		width:50px;
+	}
+
+	li div.subTask input{
+		font-family : Roboto, Helvetica, Arial;
+		 width: calc(100% - 80px);
+		 min-width:200px;
+		 height :30px;
+		 margin-bottom:5px;
+	}	
+	li div.subTask  textarea{
+		font-family : Roboto, Helvetica, Arial;
+		width: calc(100% - 80px);
+		min-width:200px;
+		height :60px;
+		resize: none;
+	}		
 	
 	form{
 		background-color: #fff;
@@ -83,8 +136,6 @@
 		min-width:400px;
 		max-width:600px;
 	}	
-	
-	
 
 	li.inactive{
 	 opacity: 0.3;
@@ -108,7 +159,7 @@
 		height :100px;
 		resize: none;
 	}	
-	form button{
+	button{
 		text-decoration:none;
 		display:inline-block;
 	    -webkit-appearance: button;
@@ -128,6 +179,14 @@
 		box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
 		background-repeat: repeat-x;
 	}	
+	.btn-small{
+		padding: 3px 8px;
+		min-width:60px;
+		font-size: 12px;
+		line-height: 1.2;
+		border-radius:3px;
+		margin-bottom: 2px;
+	}
 	.btn-red{
 		background-color: #b7337a;
 		color: #fff;
@@ -159,41 +218,41 @@
 	  display: block;
 	}
 	
-		@media only screen and (min-width:601px) and (max-width:800px) {
-		#main{
-			margin-top : 90px;
-			padding:0;
-		}	
-		div[id^="app"] {
-			padding: 0;
-			margin: 0;
-			margin-bottom:10px;
-		}
-		li{
-			width:75%;
-		}	
-		li div{
-			width:100%;
-		}	
-		ul{
-			display:block;
-			width:inherit;
-			margin-left: 60px;
-			padding:0;
-			padding:5px 0 0px 5px;
+	@media only screen and (min-width:601px) and (max-width:800px) {
+	#main{
+		margin-top : 90px;
+		padding:0;
+	}	
+	div[id^="app"] {
+		padding: 0;
+		margin: 0;
+		margin-bottom:10px;
+	}
+	li{
+		width:75%;
+	}	
+	li div{
+		width:100%;
+	}	
+	ul{
+		display:block;
+		width:inherit;
+		margin-left: 60px;
+		padding:0;
+		padding:5px 0 0px 5px;
 
-		}
-		form {
-			width:68.6%;
-			display:block;
-			marging:0;
-			margin-left: 75px;
-			padding:10px 0 30px 5px;
-		}
+	}
+	form {
+		width:68.6%;
+		display:block;
+		marging:0;
+		margin-left: 75px;
+		padding:10px 0 30px 5px;
+	}
 
-		form div{
-			margin-left:20px;	
-		}
+	form div{
+		margin-left:20px;	
+	}
 
 	}
 	

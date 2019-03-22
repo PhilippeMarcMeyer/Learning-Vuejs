@@ -11,17 +11,28 @@
 	<div id="main">
 		<div id="app-7">
 		  <ul>
-			<!--
-			  Now we provide each todo-item with the todo object
-			  it's representing, so that its content can be dynamic.
-			  We also need to provide each component with a "key",
-			  which will be explained later.
-			-->
-			<todo-item
-			  v-for="item in workList"
-			  v-bind:todo="item"
-			  v-bind:key="item.id"
-			></todo-item>
+			<li v-for="todo in workList" v-bind:class="{inactive: todo.done}" >
+				<div v-bind:id="todo.id" v-on:click="handleClick(todo.id)" v-bind:class="{'noDrop':todo.done}" :draggable="!todo.done" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+					<b>{{ todo.toDoTitle | capitalize}}</b>
+					<i class="fa fa-trash icon-right" @click="handleTrash(todo.id)"></i>
+					<i v-bind:class="{'fa-eye': todo.done,'fa-eye-slash': !todo.done}" class="fa icon-right" v-on:click="handleHide(todo.id)"></i>
+					<i class="children fas fa-list-ol icon-right" v-on:click="handleClickChildren(todo.id)"><span>{{todo.childrenNr}}</span></i>
+					<br />
+					<span class='pre'>{{ todo.toDoSummary }}</span>
+					<div v-on:click="handleSubClick(todo.id)" v-bind:class="{'hidden':currentParent!=todo.id,'shown':currentParent==todo.id,'subTask':true}">
+						
+						<p>Sub Tasks :</p>
+							<span v-html="childrenList"></span></br>
+							<span>
+								<label>Title : </label><input id="toDoSubTitle" v-model="toDoSubTitle">
+							</span></br>
+							<span>
+								<label>Notes : </label><textarea id="toDoSubSummary" v-model="toDoSubSummary"><pre></pre></textarea>
+							</span>
+						<button v-bind:data-parent="todo.id" class="btn-blue btn-small btn-right" v-on:click="addSubItem">Add</button>
+					</div>
+				</div>
+			</li>
 		  </ul>
 
 		  <form>

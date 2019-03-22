@@ -1,34 +1,6 @@
 
-Vue.component('todo-item', {
-  props: ['todo'],
-  template: `<li v-bind:class="{inactive: todo.done}" >
-				<div v-bind:id="todo.id" @click="handleClick(todo.id)" v-bind:class="{'noDrop':todo.done}" :draggable="!todo.done" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
-					<b>{{ todo.toDoTitle }}</b>
-					<i class="fa fa-trash icon-right" @click="handleTrash(todo.id)"></i>
-					<i v-bind:class="{'fa-eye': todo.done,'fa-eye-slash': !todo.done}" class="fa icon-right" @click="handleHide(todo.id)"></i>
-					<br />
-					<span class='pre'>{{ todo.toDoSummary }}</span>
-				</div>
-			</li>`,
- methods: {
-  	handleClick(id) {
-		app7.updateId = id;
-		app7.showUpdate();
-    },  	
-	handleTrash(id) {
-		app7.updateId = id;
-		app7.itemTrash();
-		event.stopPropagation();
-    },
-	handleHide(id) {
-		app7.updateId = id;
-		app7.itemHide();
-		event.stopPropagation();
-    }
-  }
-})
 let toStorage = new storageList("todos");
-var app7 = new Vue({
+var appTodo = new Vue({
   el: '#app-7',
   data: {
 	toStorage : toStorage,
@@ -39,15 +11,76 @@ var app7 = new Vue({
 	updateId:null,
 	message:'',
     workListRaw: toStorage.getList(),
+	currentParent : null,
+	toDoSubTitle : '',
+	toDoSubSummary : '',
+	childrenList: ''
   },
   computed:{
 		workList : function(){
-			return this.workListRaw.sort(function(a,b){
+
+			let list = this.workListRaw.sort(function(a,b){
 				return a.order < b.order ? 1:-1;	
 			});
+			
+			return list;
 		}
   },
-	methods: {
+  filters:{
+	  capitalize:function(value){
+		  if(!value) return "";
+		  value = value.toString();
+		  return value.charAt(0).toUpperCase()+value.slice(1);
+	  }
+	  
+  },
+  methods: {
+		 handleSubClick: function(id){
+			event.stopPropagation(); 
+		 },
+		 handleClickChildren : function(id){
+			 if(this.currentParent != id){
+				 this.currentParent = id;
+				let data = this.workList.filter(function(x){
+					return x.id == id;
+				});
+				if(data.length >0){
+					let children = [];
+					let childrenList ="";
+					if(data[0].childrenList.length >0){
+							childrenList+="<ul>";
+						data[0].childrenList.forEach(function(x){
+							childrenList+="<li>";
+							childrenList+="<b>"+x.toDoTitle+"</b>";
+							childrenList+="<p>"+x.toDoSummary+"</p>";
+							childrenList+="</li>";
+						});
+						childrenList+="</ul>";
+						this.childrenList+=childrenList;
+
+					}
+				}
+			 }else{
+				this.currentParent = null; 
+				this.childrenList =""
+
+			 }
+			event.stopPropagation();
+		 },
+		handleClick:function(id) {
+			this.updateId = id;
+			this.showUpdate();
+		},  	
+		handleTrash :function(id) {
+			this.updateId = id;
+			this.itemTrash();
+			event.stopPropagation();
+		},
+		handleHide:function(id){
+			this.updateId = id;
+			this.itemHide();
+			event.stopPropagation();
+		},
 		inverse:function(sourceId,targetId){
 			let srcOffset = -1;
 			let destOffset = -1;
@@ -123,12 +156,20 @@ var app7 = new Vue({
 				}
 			}
 		},
+		addSubItem : function(){
+			if(this.toDoSubTitle !='' && this.currentParent!=null){
+				let id = Date.now();
+				let newTodo = { id: id, toDoTitle: this.toDoSubTitle,toDoSummary : this.toDoSubSummary,done : false, order : id, parentId : this.currentParent};
+				//this.workList.push(newTodo);
+				this.toStorage.add(newTodo,"id");	
+			}
+		},
 		addItem: function () {
 			this.message = '';
 			if(this.toDoTitle !=''){
 				if(this.addMode == "add"){
 					let id = Date.now();
-					let newTodo = { id: id, toDoTitle: this.toDoTitle,toDoSummary : this.toDoSummary,done : false,order : id};
+					let newTodo = { id: id, toDoTitle: this.toDoTitle,toDoSummary : this.toDoSummary,done : false, order : id, parentId : 0};
 					this.workList.push(newTodo);
 					this.toStorage.add(newTodo,"id");
 				}else{
@@ -250,11 +291,47 @@ function storageList(listName){
 		
 	}
 	this.getList=function(){
+		this.listArr = [];
 		if (localStorage.getItem(this.name)!= null){
 			this.listArr= JSON.parse(localStorage[this.name]);
+		
+			this.listArr.forEach(function(x){
+				if(x.childrenNr == undefined){
+					x.childrenNr =0;
+				}
+				if(x.childrenList== undefined){
+					x.childrenList = [];
+				}
+				if(x.parentId == undefined){
+					x.parentId =0;
+				}
+			});
+			let list = this.listArr.filter(function(x){
+				return x.parentId == 0;	
+			});
+			let secondList = this.listArr.filter(function(x){
+				return x.parentId != 0;	
+			});
+			list.sort(function(a,b){
+				return a.order < b.order ? 1:-1;	
+			});
+			
+			list.forEach(function(x){
+				x.childrenList = [];
+				x.childrenNr = 0;	
+				if(secondList.length>0){
+					secondList.forEach(function(y){
+						if(y.parentId == x.id){
+							x.childrenNr +=1;
+							x.childrenList.push(y);
+						}
+					});
+				}
+			});
+			this.listArr = list;
 		}
-		return this.listArr;
-	}
+			return this.listArr;
+	  }
 	this.init();
 }
 function allowDrop(ev) {
@@ -266,10 +343,10 @@ function drag(ev) {
 function drop(ev) {
   ev.preventDefault();
   let source = ev.dataTransfer.getData("text");
-  let target = ev.target.id;
+  let target = ev.currentTarget.id;
   if (document.getElementById(target).className != "noDrop"){
 	  if(source && target && (source != target)){
-	  app7.inverse(source,target);
+	  appTodo.inverse(source,target);
   }  
   }
 }
@@ -279,7 +356,7 @@ function toTextArea(input) {
 }
 
 function saveToFile(){
- let workList = JSON.stringify(app7.workList);	
+ let workList = JSON.stringify(appTodo.workList);	
 	download(workList,"todoList_"+Date.now()+".json",'text/plain');
 }
 
@@ -348,8 +425,8 @@ document.getElementById('btnOpen').onclick = function(){
     openFile(function(txt){
         document.getElementById('tbMain').value = toTextArea(txt); 
 			let json = JSON.parse(document.getElementById('tbMain').value );
-			app7.workList.workList = json;
-			app7.toStorage.addall(json);
+			appTodo.workList.workList = json;
+			appTodo.toStorage.addall(json);
 			setTimeout(function(){
 				document.location.reload(true);
 			},500);
