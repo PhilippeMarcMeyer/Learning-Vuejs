@@ -20,7 +20,6 @@ if(list.length == 0){
 }
 
 function save(){
-	
 	toStorage.addall(treeData.childrenList);
 }
 
@@ -67,19 +66,22 @@ Vue.component('tree-item', {
 	  },
 	  getDateTime:function(value){
 		  let months = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+		  let days = ["mo","tu","we","fr","sa","su"];
 		  let d = new Date(value);
-		  let result = months[d.getMonth()] +"-" + d.getDay()+"-" + d.getFullYear() +" " + d.getHours() +":" + d.getMinutes();
+		  let result = days[d.getDay()] +" "+ d.getDate()+"-" + months[d.getMonth()] +"-" + d.getFullYear() +" " + d.getHours() +":" + d.getMinutes();
 		  return result;
 	  }
   },
   methods: {
 
     toggle: function () {
+		message("");
       if (this.isParent) {
         this.isOpen = !this.isOpen
       }
     },
     makeParent: function (item) {
+		message("");
 		if(!this.isOpen  && item.childrenList.length == 0){
 			this.addItem(item);
 		}
@@ -87,6 +89,7 @@ Vue.component('tree-item', {
 		save();
     },
 	handleTrash:function(item){
+		message("");
 		let parentId = item.parentId;
 		if(parentId == 0){
 			let offset = -1;
@@ -110,6 +113,7 @@ Vue.component('tree-item', {
 		save();
 	},
     addItem: function (item) {
+		message("");
 	let child = {};
 	  child.id = Date.now();
 	  child.parentId = item.id;
@@ -124,10 +128,11 @@ Vue.component('tree-item', {
 	  save();
     },
 	editTitle:function(item){
+		message("");
 		item.editModeTitle=true;
 	},
 	saveTitle:function(item){
-		// todo : save to storage
+		message("");
 		if(item.toDoTitle.trim() == ""){
 			item.toDoTitle="new"
 		}
@@ -135,9 +140,11 @@ Vue.component('tree-item', {
 		item.editModeTitle=false;
 	},
 	editSummary:function(item){
+		message("");
 		item.editModeSummary=true;
 	},
 	saveSummary:function(item){
+		message("");
 		// todo : save to storage
 		if(item.toDoSummary.trim() == ""){
 			item.toDoSummary="..."
@@ -180,7 +187,7 @@ var deleteElement = function(tree,item){
 	}
 }
 
-// boot up the demo
+//  appTodo.treeData.childrenList
 var appTodo = new Vue({
   el: '#todoList',
   data: {

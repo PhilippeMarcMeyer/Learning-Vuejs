@@ -9,18 +9,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
    	<link rel="stylesheet" href="./todo.css">
 	<style>
-		.done-show li.inactive{
-			opacity: 0.5;
-		}
-		.done-hide li.inactive{
-			display:none;
-		}
-		.datetime{
-			font-size :12px;
-			font-weight:300;
-			font-style:italic;
-		}
-		
+
 	</style>
  </head>
  <body>
@@ -66,10 +55,16 @@
 		@add-item="addItem"
 	  ></tree-item>
 	</ul>
+	
+	<div class="buttons">
+		<button class="btn-red btn-left btn-small" onclick="doImport()">Let it rain</button>		
+		<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the clouds</button>
+        <div id="message"></div>
+	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script type="text/javascript" src="storage.js"></script>
 	<script type="text/javascript" src="recursive.js"></script>
-
+	<script type="text/javascript" src="clouds.js"></script>
  </body>
 </html>
