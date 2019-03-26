@@ -62,6 +62,8 @@
 		width:90%;
 		min-height:100px;
 		max-height:100px;
+		font-size: 12px;
+		font-style: normal;
 	}
 	.falseEdit{
 		border: solid 1px grey;
@@ -72,6 +74,8 @@
 		width:60%;
 		border:none;
 		height:1em;
+		font-size: 12px;
+		font-style: normal;
 	}
 	.summaryCheck{
 		display:inline-block;
@@ -164,8 +168,11 @@
 		font-stretch:semi-condensed;
 	}
 	#message{
+		position:absolute;
+		margin-top:-10px;
 		color:black;
 		font-size :12px;
 		font-weight:300;
-		test-align:center;
+		width:400px;
+		text-align:center;
 	}

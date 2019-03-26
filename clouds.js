@@ -1,7 +1,7 @@
-const home = "https://api.myjson.com/bins";
-const key = "bvaly";
+
+let key = "xxx"; // post some json to get your own key
 function doImport(){
-	
+	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
 	request.open('GET', home+"/"+key, true);
 
@@ -27,13 +27,15 @@ function doImport(){
 }
 
 function doExport(){
+	let home = "https://jsonblob.com/api/jsonBlob/"
 	var request = new XMLHttpRequest();
-	var params = {'bvaly':appTodo.treeData.childrenList};
-	request.open('POST', home, true);
+	var params = appTodo.treeData.childrenList;
+	request.open('PUT', home+key, true);
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
+		  console.log(request)
 			message("You precious data is saved !");
 	  } else {
 			message("We reached our target server, but it returned an error :-(");
