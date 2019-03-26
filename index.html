@@ -1,65 +1,70 @@
-<html>
- <head>
- <title>TODO Vue.js</title>
-     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Vue.js</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" href="todo.css">
+   	<link rel="stylesheet" href="./todo.css">
+	<style>
+
+	</style>
  </head>
  <body>
- 	<div class="title">TODO List :</div>
-	<div id="main">
-		<div id="app-7">
-		  <ul>
-			<li v-for="todo in workList" v-bind:class="{inactive: todo.done}" >
-				<div v-bind:id="todo.id" v-on:click="handleClick(todo.id)" v-bind:class="{'noDrop':todo.done}" :draggable="!todo.done" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
-					<b>{{ todo.toDoTitle | capitalize}}</b>
-					<i class="fa fa-trash icon-right" @click="handleTrash(todo.id)"></i>
-					<i v-bind:class="{'fa-eye': todo.done,'fa-eye-slash': !todo.done}" class="fa icon-right" v-on:click="handleHide(todo.id)"></i>
-					<i class="children fas fa-list-ol icon-right" v-on:click="handleClickChildren(todo.id)"><span>{{todo.childrenNr}}</span></i>
-					<br />
-					<span class='pre'>{{ todo.toDoSummary }}</span>
-					<div v-on:click="handleSubClick(todo.id)" v-bind:class="{'hidden':currentParent!=todo.id,'shown':currentParent==todo.id,'subTask':true}">
-						
-						<p>Sub Tasks :</p>
-							<span v-html="childrenList"></span></br>
-							<span>
-								<label>Title : </label><input id="toDoSubTitle" v-model="toDoSubTitle">
-							</span></br>
-							<span>
-								<label>Notes : </label><textarea id="toDoSubSummary" v-model="toDoSubSummary"><pre></pre></textarea>
-							</span>
-						<button v-bind:data-parent="todo.id" class="btn-blue btn-small btn-right" v-on:click="addSubItem">Add</button>
-					</div>
-				</div>
-			</li>
-		  </ul>
+<!-- item template -->
+<script type="text/x-template" id="item-template">
+  <li :class="{'inactive':item.done}">
+    <div
+	:class="{'bold': isParent,'task': !item.toDoTitle==''}">
+	  <div 
+	  v-show="item.toDoTitle != ''" class="title">
+	  <span v-if="!item.editModeTitle" style="width:70%" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
+	  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
+		  <i class="fa fa-trash icon-right" @click="handleTrash(item)"></i>
+		  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item)"></i>
+		  <i class="children fas fa-list-ol icon-right" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
+	  </div>
+      <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}</div>
+	  <div v-else :class="{'note':true}">
+	  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
+	  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span>
+	  </div>
+    </div>
+    <ul  v-show="isOpen" v-if="isParent">
+      <tree-item
+        class="item"
+        v-for="(child, index) in item.childrenList"
+        :key="index"
+        :item="child"
+      ></tree-item>
+      <li  @click="addItem(item)"><i class="fas fa-plus"></i></li>
+    </ul>
+  </li>
+</script>
 
-		  <form>
-			<div>
-				<label>Task : </label><input id="toDoTitle" v-model="toDoTitle">
-			</div>
-			<div>
-				<label>Notes : </label><textarea id="toDoSummary" v-model="toDoSummary"><pre></pre></textarea>
-			</div>
-			<button class="btn-blue btn-right" v-on:click="addItem">{{btnAddTitle}}</button>
-			<button class="btn-blue btn-left" v-on:click="cancel">Cancel</button>
-			<p>{{ message }}</p>
+	 <p style="margin-bottom:4px;font-size:24px;color:#6D8FA4;font-weight:900;">Todo list : </p>
+	 <div id="showTasks"><i class=""></i>&nbsp;Show done tasks </div>
 
-		   </form>
-		    <form style="background-color:white;background:white;border:none;">
-		  		<button class="btn-red btn-right" onclick="saveToFile()">Save to file</button>
-				<a id='btnOpen'  href='#' ><button class="btn-red btn-right">Import from file</button></a>
-				
-				<textarea id='tbMain' style="display:none"></textarea>
-
-			</form>
-		</div>
-	</div>	
+	 <ul id="todoList">
+	  <tree-item
+		class="item"
+		:item="treeData"
+		@make-parent="makeParent"
+		@add-item="addItem"
+	  ></tree-item>
+	</ul>
 	
-
+	<div class="buttons">
+		<button class="btn-red btn-left btn-small" onclick="doImport()">Let it rain</button>		
+		<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the clouds</button>
+        <div id="message"></div>
+	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<script type="text/javascript" src="todo.js"></script>
+	<script type="text/javascript" src="storage.js"></script>
+	<script type="text/javascript" src="recursive.js"></script>
+	<script type="text/javascript" src="clouds.js"></script>
  </body>
 </html>
