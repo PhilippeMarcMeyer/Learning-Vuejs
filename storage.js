@@ -107,16 +107,18 @@ function storageList(listName){
 				x.editModeTitle=false;
 				x.editModeSummary=false;
 			});
+			/*
 			let list = this.listArr.filter(function(x){
 				return x.parentId == 0;	
 			});
 			let secondList = this.listArr.filter(function(x){
 				return x.parentId != 0;	
 			});
-			list.sort(function(a,b){
+			*/
+			this.listArr.sort(function(a,b){
 				return a.order < b.order ? 1:-1;	
 			});
-			
+			/*
 			list.forEach(function(x){
 				x.childrenList = [];
 				x.childrenNr = 0;	
@@ -129,7 +131,7 @@ function storageList(listName){
 					});
 				}
 			});
-			this.listArr = list;
+			*/
 		}
 			return this.listArr;
 	  }

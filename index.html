@@ -3,103 +3,61 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
- <title>Vue.js</title>
-     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<title>Vue.js</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-   <style>
-  
-	body {
-	  font-family: Menlo, Consolas, monospace;
-	  color: #444;
-	}
-	.item {
-	  cursor: pointer;
-	}
-	.bold {
-	  font-weight: bold;
-	}
-	ul {
-	  padding-left: 1em;
-	  	margin:3px 0px 10px 4px;
-		line-height: 1.5em;
-		list-style: none;
-		width:400px;
-	}
-	.title{
-		font-weight:bold;
-	}
-	.note{
-		border: solid 1px grey;
-		margin-top:2px;
-		padding :6px;
-		min-height:40px;
-	}
-	
-	.icon-right{
-		float:right;
-		margin:8px;
-	}	
-	.pre{
-	  white-space: pre;
-	  display: block;
-	}
-		.children{
-		position: relative;
-		padding-right:8px;
-	}
-	.children span {
-		position: absolute;
-		font-size: 14px;
-		font-style: normal;
-		padding:0;
-		margin:0;
-		color : red;
-		text-align:right;
-		padding-left:2px;
-		width :16px;
-	}
-	  </style>
+   	<link rel="stylesheet" href="./todo.css">
+	<style>
+		.done-show li.inactive{
+			opacity: 0.5;
+		}
+		.done-hide li.inactive{
+			display:none;
+		}
+		.datetime{
+			font-size :12px;
+			font-weight:300;
+			font-style:italic;
+		}
+		
+	</style>
  </head>
  <body>
 <!-- item template -->
 <script type="text/x-template" id="item-template">
-  <li>
+  <li :class="{'inactive':item.done}">
     <div
-      :class="{bold: isParent}">
+	:class="{'bold': isParent,'task': !item.toDoTitle==''}">
 	  <div 
 	  v-show="item.toDoTitle != ''" class="title">
-	  <span v-if="!item.editModeTitle"  @click="editTitle(item)"> {{ item.toDoTitle}}</span>
-	  <span v-else><input id="toDoTitle" @change="saveTitle(item)" v-model="item.toDoTitle"></span>
+	  <span v-if="!item.editModeTitle" style="width:70%" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
+	  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
 		  <i class="fa fa-trash icon-right" @click="handleTrash(item)"></i>
-		  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item.id)"></i>
+		  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item)"></i>
 		  <i class="children fas fa-list-ol icon-right" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
 	  </div>
-      <div v-if="!item.editModeSummary" @click="editSummary(item)" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}</div>
+      <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}</div>
 	  <div v-else :class="{'note':true}">
-	  <textarea id="item.toDoSummary" v-model="item.toDoSummary" @change="saveSummary(item)"></textarea>
+	  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
+	  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span>
 	  </div>
-
-      <span 
-	  @click="toggle"
-	  v-if="isParent">
-	  [{{ isOpen ? '-' : '+' }}]
-	  </span>
     </div>
-    <ul v-show="isOpen" v-if="isParent">
+    <ul  v-show="isOpen" v-if="isParent">
       <tree-item
         class="item"
         v-for="(child, index) in item.childrenList"
         :key="index"
         :item="child"
       ></tree-item>
-      <li class="add" @click="addItem(item)">Add</li>
+      <li  @click="addItem(item)"><i class="fas fa-plus"></i></li>
     </ul>
   </li>
 </script>
 
-<p>(You can double click on an item to turn it into a folder.)</p>
-	 <p>Todo list : </p>
+	 <p style="margin-bottom:4px;font-size:24px;color:#6D8FA4;font-weight:900;">Todo list : </p>
+	 <div id="showTasks"><i class=""></i>&nbsp;Show done tasks </div>
+
 	 <ul id="todoList">
 	  <tree-item
 		class="item"
@@ -108,8 +66,10 @@
 		@add-item="addItem"
 	  ></tree-item>
 	</ul>
+
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script type="text/javascript" src="storage.js"></script>
 	<script type="text/javascript" src="recursive.js"></script>
+
  </body>
 </html>
