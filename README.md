@@ -1,4 +1,4 @@
-# Learning-Vuejs
+# Vuejs todo list
 Recursive ToDolist with local storage
 
 - Recursive toDoList with any number of sub branches.
