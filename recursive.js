@@ -1,5 +1,6 @@
 let toStorage = new storageList("todos");
 let list = toStorage.getList();
+checkData(list);
 
 let showDone = false;
 
@@ -22,6 +23,7 @@ function save(){
 }
 
 var treeData ={
+ dueDate:"",
  toDoTitle: "",
  toDoSummary: "",
  id : -99,
@@ -49,11 +51,31 @@ Vue.component('tree-item', {
     }
   },
   computed: {
-
     isParent: function () {
       return this.item.childrenList &&
         this.item.childrenList.length
-    }
+    },
+	dueStatus: function(){
+		let result = "none";
+		let dueDate = 0;
+		let delta = 0;
+		let nowAndThen = Date.now();
+		let soonSpan = 24*60*60*1000;
+		
+		if(this.item.dueDate && !this.item.done){
+			dueDate = new Date(this.item.dueDate).getTime();
+			delta = nowAndThen - dueDate;
+			
+			if(delta > 0){
+				return "late";
+			}else if((delta*-1) < soonSpan) {
+				return "soon";
+			}else{
+				return "cool";
+			}	
+		}	
+		return result;		
+	}
 		
   },
 	filters:{
@@ -68,7 +90,14 @@ Vue.component('tree-item', {
 		  let d = new Date(value);
 		  let result = days[d.getDay()] +" "+ d.getDate()+"-" + months[d.getMonth()] +"-" + d.getFullYear() +" " + d.getHours() +":" + d.getMinutes();
 		  return result;
-	  }
+	  },
+	getDateTimeStr:function(value){
+		if(value){
+			return value.replace("T"," ");
+		}else{
+			return "";
+		}
+	}
   },
   methods: {
     toggle: function () {
@@ -112,6 +141,7 @@ Vue.component('tree-item', {
     addItem: function (item) {
 		message("");
 		let child = {};
+		child.dueDate="",
 		child.id = Date.now();
 		child.parentId = item.id;
 		child.toDoTitle = "new";
@@ -119,6 +149,7 @@ Vue.component('tree-item', {
 		child.done = false;
 		child.order = child.id;
 		child.childrenList = [],
+		child.childrenNr =0,
 		child.editModeTitle=true,
 		child.editModeSummary=false,
 		item.childrenList.push(child);
@@ -309,7 +340,30 @@ function sortBranches (tree){
 	});
 }
 
-
+function checkData(tree){
+	if(!Array.isArray(tree)){
+		tree = tree.childrenList;
+	}
+	tree.forEach(function(x){
+		if(x.childrenNr == undefined){
+			x.childrenNr =0;
+		}
+		if(x.childrenList== undefined){
+			x.childrenList = [];
+		}
+		if(x.parentId == undefined){
+			x.parentId =0;
+		}
+		if(x.dueDate == undefined){
+			x.dueDate = "";
+		}
+	});
+	tree.forEach(function(x,i){
+		if(x.childrenList.length != 0){
+			checkData(x.childrenList);
+		}
+	});
+}
 
 function allowDrop(ev) {
   ev.preventDefault();

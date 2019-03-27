@@ -180,8 +180,33 @@
 		width:400px;
 		text-align:center;
 	}
-	
 	.mover{
 		position:absolute;
 		right:60px;
+	}
+	.dueDate{
+		position:absolute;
+		top:2px;
+		right:2px;
+		font-size:9px;
+		width:80px;
+		padding: 2px 4px 2px 4px;
+		color:black;
+	}
+	.dueDate.cool{
+		border : 1px solid green;
+		background-color:lightgreen;
+	}
+	.dueDate.late{
+		border : 1px solid red;
+		background-color:orangered;
+	}
+	
+	.dueDate.soon{
+		border : 1px solid orangered;
+		background-color:orange;
+	}
+	
+	.dueDate.none{
+	display:none;
 	}

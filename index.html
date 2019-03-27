@@ -35,10 +35,13 @@
 			:class="{'fa fa-arrows-alt icon-right mover': true,'noDrop':item.done}">
 		   </i>		  
 	  </div>
-      <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}</div>
+      <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}
+	  <span v-if="item.dueDate!=''" :class="{'cool':dueStatus=='cool','late':dueStatus=='late','soon':dueStatus=='soon','dueDate':true}">{{item.dueDate | getDateTimeStr}}</span>
+	  </div>
 	  <div v-else :class="{'note':true}">
 	  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
-	  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span>
+	  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span><br />
+	  <span><input type="datetime-local" class="edit" v-model="item.dueDate"></span>
 	  </div>
     </div>
     <ul  v-show="isOpen" v-if="isParent">
@@ -71,6 +74,7 @@
 	</div>
 	
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	
 	<script type="text/javascript" src="storage.js"></script>
 	<script type="text/javascript" src="recursive.js"></script>
 	<script type="text/javascript" src="clouds.js"></script>

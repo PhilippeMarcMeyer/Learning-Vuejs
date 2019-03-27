@@ -13,7 +13,6 @@ function storageList(listName){
 		}
 	},
 	this.changeOrders=function(data,srcProp,destProp){
-		//{id:sourceId,order:destOrder,id:targetId,order:srcOrder}
 		if(this.storageOK){
 			let todos = null;
 			if (localStorage.getItem(this.name)!= null){
@@ -95,43 +94,10 @@ function storageList(listName){
 			this.listArr= JSON.parse(localStorage[this.name]);
 		
 			this.listArr.forEach(function(x){
-				if(x.childrenNr == undefined){
-					x.childrenNr =0;
-				}
-				if(x.childrenList== undefined){
-					x.childrenList = [];
-				}
-				if(x.parentId == undefined){
-					x.parentId =0;
-				}
 				x.editModeTitle=false;
 				x.editModeSummary=false;
 			});
-			/*
-			let list = this.listArr.filter(function(x){
-				return x.parentId == 0;	
-			});
-			let secondList = this.listArr.filter(function(x){
-				return x.parentId != 0;	
-			});
-			*/
-			this.listArr.sort(function(a,b){
-				return a.order < b.order ? 1:-1;	
-			});
-			/*
-			list.forEach(function(x){
-				x.childrenList = [];
-				x.childrenNr = 0;	
-				if(secondList.length>0){
-					secondList.forEach(function(y){
-						if(y.parentId == x.id){
-							x.childrenNr +=1;
-							x.childrenList.push(y);
-						}
-					});
-				}
-			});
-			*/
+
 		}
 			return this.listArr;
 	  }

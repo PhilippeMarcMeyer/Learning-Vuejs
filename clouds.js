@@ -1,5 +1,5 @@
 
-let key = "xxx"; // get your own
+let key = "xxx-xxx-xxx-xxx-xxxxxx"; // use your own by posting once manually to https://jsonblob.com
 function doImport(){
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
