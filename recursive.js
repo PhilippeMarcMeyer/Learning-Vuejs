@@ -1,7 +1,5 @@
 let toStorage = new storageList("todos");
-let list = toStorage.getList().sort(function(a,b){
-	return a.order < b.order ? 1:-1;	
-});
+let list = toStorage.getList();
 
 let showDone = false;
 
@@ -26,7 +24,7 @@ function save(){
 var treeData ={
  toDoTitle: "",
  toDoSummary: "",
- id : 0,
+ id : -99,
  order:0,
  done: false,
  childrenList :list,
@@ -73,7 +71,6 @@ Vue.component('tree-item', {
 	  }
   },
   methods: {
-
     toggle: function () {
 		message("");
       if (this.isParent) {
@@ -114,30 +111,34 @@ Vue.component('tree-item', {
 	},
     addItem: function (item) {
 		message("");
-	let child = {};
-	  child.id = Date.now();
-	  child.parentId = item.id;
-	  child.toDoTitle = "new";
-	  child.toDoSummary = "...";
-	  child.done = false;
-	  child.order = child.id;
-	  child.childrenList = [],
-	  child.editModeTitle=true,
-	  child.editModeSummary=false,
-	  item.childrenList.push(child);
-	  save();
+		let child = {};
+		child.id = Date.now();
+		child.parentId = item.id;
+		child.toDoTitle = "new";
+		child.toDoSummary = "...";
+		child.done = false;
+		child.order = child.id;
+		child.childrenList = [],
+		child.editModeTitle=true,
+		child.editModeSummary=false,
+		item.childrenList.push(child);
+		save();
     },
 	editTitle:function(item){
 		message("");
 		item.editModeTitle=true;
 	},
-	saveTitle:function(item){
+	saveTitle:function(item,mode){
+		if(mode == "change" && item.toDoTitle.trim() == ""){
+			return;
+		}else{
 		message("");
 		if(item.toDoTitle.trim() == ""){
 			item.toDoTitle="new"
 		}
 		save();
 		item.editModeTitle=false;
+		}
 	},
 	editSummary:function(item){
 		message("");
@@ -159,6 +160,60 @@ Vue.component('tree-item', {
 	}
   }
 })
+
+var setInverse = function(tree,parentId,srcId,destId){
+	if(parentId == 0){
+		let offsetSrc = -1;
+		let offsetDest = -1;
+		for (let i = 0 ; i < tree.length;i++){
+			if(tree[i].id == srcId){
+				offsetSrc = i;
+			}
+			if(tree[i].id == destId){
+				offsetDest = i;
+			}
+		}
+		if(offsetSrc != -1 && offsetDest !=-1){
+			let temp = tree[offsetSrc].order;
+			tree[offsetSrc].order = tree[offsetDest].order;
+			tree[offsetDest].order = temp;
+		}
+	}
+	else{
+		let found = false;
+		for (let i = 0 ; i < tree.length;i++){
+			if(tree[i].id  == parentId){
+				if(tree[i].childrenList.length != 0){
+					found = true;
+					let offsetSrc = -1;
+					let offsetDest = -1;
+					for (let j = 0 ; j < tree[i].childrenList.length;j++){
+						if(tree[i].childrenList[j].id == srcId){
+							offsetSrc = j;
+						}
+						if(tree[i].childrenList[j].id == destId){
+							offsetDest = j;
+						}
+					}
+					if(offsetSrc != -1 && offsetDest !=-1){
+						let temp = tree[i].childrenList[offsetSrc].order;
+						tree[i].childrenList[offsetSrc].order = tree[i].childrenList[offsetDest].order;
+						tree[i].childrenList[offsetDest].order = temp;
+					}
+				}
+				break;
+			}
+		}
+		if(!found){
+			for (let i = 0 ; i < tree.length;i++){
+				if(tree[i].childrenList.length != 0){
+					setInverse(tree[i].childrenList,parentId,srcId,destId);
+				}
+			}
+		}
+	}
+}
+
 
 var setDoneChildren = function(tree,isDone){
 		tree.forEach(function(x,i){
@@ -191,10 +246,16 @@ var deleteElement = function(tree,item){
 var appTodo = new Vue({
   el: '#todoList',
   data: {
-    treeData: treeData,
+    treeDatas: treeData,
 	showDone : true
   },
-  
+  computed:{
+	treeData: function () {
+		let list = this.treeDatas;
+		sortBranches(list);
+		return list;
+	}
+  },
   methods: {
   	makeParent: function (item) {
       Vue.set(item, 'childrenList', [])
@@ -213,7 +274,13 @@ var appTodo = new Vue({
 	  child.editModeTitle=true,
 	  child.editModeSummary=false,
 	  item.childrenList.push(child);
-    }
+    },
+	inverse:function(source,target){
+		let srcId = source.id;
+		let destId = target.id;
+		let parentId = source.parentId;
+		setInverse(treeData.childrenList,parentId,srcId,destId);
+	}
   }
 });
 
@@ -228,3 +295,39 @@ showTasks.addEventListener("click", function(){
 	document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide" ;
 });
 
+function sortBranches (tree){
+	if(!Array.isArray(tree)){
+		tree = tree.childrenList;
+	}
+	tree.sort(function(a,b){
+		return a.order < b.order ? 1:-1;
+	});
+	tree.forEach(function(x,i){
+		if(x.childrenList.length != 0){
+			sortBranches(x.childrenList);
+		}
+	});
+}
+
+
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text/plain", JSON.stringify({id:ev.target.id,parentId:ev.target.dataset.parent}));
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  let source = JSON.parse(ev.dataTransfer.getData("text"));
+
+  let target = {id:ev.target.id,parentId:ev.target.dataset.parent};
+  
+  if (document.getElementById(target.id).className != "noDrop"){
+	  if(source.id && target.id && (source.id != target.id) && (source.parentId == target.parentId)){
+	  appTodo.inverse(source,target);
+  }  
+  }
+}

@@ -1,5 +1,5 @@
 
-let key = "xxx"; // post some json to get your own key
+let key = "xxx"; // get your own
 function doImport(){
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
