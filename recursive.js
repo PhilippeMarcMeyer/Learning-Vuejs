@@ -1,19 +1,4 @@
 
-var hasStorage = (function() {
-	try {
-		localStorage.setItem(mod, mod);
-		localStorage.removeItem(mod);
-		return true;
-	} catch (exception) {
-		return false;
-	}
-}());
-
-if(!hasStorage){
-	message("Please allow cookies as this app uses local storage to keep your todos...");
-	document.getElementById("showTasks").style.display="none";
-	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="none"});
-}else{
 	let toStorage = new storageList("todos");
 	let list = toStorage.getList();
 	checkData(list);
@@ -200,7 +185,7 @@ if(!hasStorage){
 		}
 	  }
 	})
-	//  appTodo.treeData.childrenList
+
 	var appTodo = new Vue({
 	  el: '#todoList',
 	  data: {
@@ -250,7 +235,7 @@ if(!hasStorage){
 		this.className = classList;
 		document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide" ;
 	});
-}
+
 var setInverse = function(tree,parentId,srcId,destId){
 	if(parentId == 0){
 		let offsetSrc = -1;
