@@ -35,7 +35,6 @@ function doExport(){
 
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
-		  console.log(request)
 			message("You precious data is saved !");
 	  } else {
 			message("We reached our target server, but it returned an error :-(");
