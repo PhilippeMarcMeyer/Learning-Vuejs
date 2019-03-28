@@ -29,4 +29,6 @@ Recursive ToDolist with local storage
 
 03/27/2019 : Added a due date (optional) with colors (orange if soon < 1 day, red if late, green otherwise)
 
+03/28/2019 : Correction bug relative to the input title => Removing "new" to enter real title was putting back "new"
+
 ![screen shot](https://raw.githubusercontent.com/PhilippeMarcMeyer/Learning-Vuejs/master/screen.png)

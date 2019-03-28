@@ -60,7 +60,7 @@ function prepareData(list){
 
 	let treeData ={
 	 dueDate:"",
-	 toDoTitle: "",
+	 toDoTitle: null,
 	 toDoSummary: "",
 	 id : -99,
 	 order:0,
@@ -197,16 +197,11 @@ function loadVueComponent(){
 			message("");
 			item.editModeTitle=true;
 		},
-		saveTitle:function(item,mode){
-			if(mode == "change" && item.toDoTitle.trim() == ""){
-				return;
-			}else{
+		saveTitle:function(item){
 			message("");
-			if(item.toDoTitle.trim() == ""){
-				item.toDoTitle="new"
-			}
-			save();
-			item.editModeTitle=false;
+			if(item.toDoTitle.trim() != ""){
+				save();
+				item.editModeTitle=false;
 			}
 		},
 		editSummary:function(item){
