@@ -1,8 +1,49 @@
+// globals :
 
-	let toStorage = new storageList("todos");
+let showDone = false;
+let appTodo = null;
+let toStorage = null;
+let treeData  = null;
+// init :
+
+window.onload = function() {
+	
+	message("<br /><h3>Please allow cookies as this app uses local storage to keep your todos...</h3>");
+
+	
+  toStorage = initLocalStorage();
+ 
+ if(toStorage != null){
+
+	message("");
+	document.getElementById("titleZone").style.display="block";
+	document.getElementById("showTasks").style.display="block";
+	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
+	
 	let list = toStorage.getList();
 	checkData(list);
-	let showDone = false;
+	treeData = prepareData(list);
+	
+	loadVueComponent();
+	  
+	appTodo = initApp(treeData); 
+	
+	setListeners();
+ }
+};
+
+// init functions :
+
+function initLocalStorage(){
+	let toStorage = new storageList("todos");
+	if(toStorage.storageOK){
+		return toStorage;
+	}else{
+		return null;
+	}
+}
+	
+function prepareData(list){
 	if(list.length == 0){
 		let child = {};
 		  child.id = Date.now();
@@ -17,7 +58,7 @@
 		  list.push(child);
 	}
 
-	var treeData ={
+	let treeData ={
 	 dueDate:"",
 	 toDoTitle: "",
 	 toDoSummary: "",
@@ -31,7 +72,10 @@
 	 editModeSummary:false,
 	 isOpen:true
 	};
-	// define the tree-item component
+	return treeData;
+}
+
+function loadVueComponent(){
 	let iter = 0;
 	Vue.component('tree-item', {
 	  template: '#item-template',
@@ -184,9 +228,11 @@
 			setDoneChildren(item.childrenList,item.done);
 		}
 	  }
-	})
+	});
+}
 
-	var appTodo = new Vue({
+function initApp(treeData){
+	return new Vue({
 	  el: '#todoList',
 	  data: {
 		treeDatas: treeData,
@@ -226,6 +272,9 @@
 		}
 	  }
 	});
+}
+
+function setListeners(){
 	let classList = appTodo.showDone ? 'fa fa-check-square' : 'fa fa-square';
 	let showTasks = document.getElementById("showTasks");
 	showTasks.className = classList;
@@ -235,6 +284,9 @@
 		this.className = classList;
 		document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide" ;
 	});
+}
+
+// utilities :
 
 var setInverse = function(tree,parentId,srcId,destId){
 	if(parentId == 0){
@@ -350,12 +402,19 @@ function checkData(tree){
 		}
 	});
 }
+
+function save(){
+	toStorage.addall(treeData.childrenList);
+}
+
 function allowDrop(ev) {
   ev.preventDefault();
 }
+
 function drag(ev) {
   ev.dataTransfer.setData("text/plain", JSON.stringify({id:ev.target.id,parentId:ev.target.dataset.parent}));
 }
+
 function drop(ev) {
   ev.preventDefault();
   let source = JSON.parse(ev.dataTransfer.getData("text"));
@@ -368,6 +427,4 @@ function drop(ev) {
   }
 }
 
-function save(){
-	toStorage.addall(treeData.childrenList);
-}
+

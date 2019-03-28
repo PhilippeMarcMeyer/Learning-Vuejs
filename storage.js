@@ -1,6 +1,15 @@
+
 function storageList(listName){
 	this.name = listName;
 	this.storageOK=(typeof(Storage) !== "undefined");
+	if(this.storageOK){
+		try {
+			localStorage.setItem("todotest", "xxxxx");
+			localStorage.removeItem("todotest");
+		} catch (exception) {
+			this.storageOK = false;
+		}
+	}
 	this.listArr = [];
 	this.init = function(){
 		if (localStorage.getItem(listName)== null)
@@ -73,31 +82,35 @@ function storageList(listName){
 		}
 	}
 	this.addall=function(arr){
-		this.removeall();
-		this.listArr = arr;
-		localStorage[this.name] = JSON.stringify(this.listArr);				
-
+		if(this.storageOK){
+			this.removeall();
+			this.listArr = arr;
+			localStorage[this.name] = JSON.stringify(this.listArr);				
+		}
 	}
 	this.removeall=function(){
 		 localStorage.removeItem(this.name);
 	}
 	this.count=function(){
-		if (localStorage.getItem(this.name)!= null){
-			this.listArr= JSON.parse(localStorage[this.name]);
+		if(this.storageOK){
+			if (localStorage.getItem(this.name)!= null){
+				this.listArr= JSON.parse(localStorage[this.name]);
+			}
 		}
 		return this.listArr.length;
-		
 	}
 	this.getList=function(){
 		this.listArr = [];
-		if (localStorage.getItem(this.name)!= null){
-			this.listArr= JSON.parse(localStorage[this.name]);
-		
-			this.listArr.forEach(function(x){
-				x.editModeTitle=false;
-				x.editModeSummary=false;
-			});
+		if(this.storageOK){
+			if (localStorage.getItem(this.name)!= null){
+				this.listArr= JSON.parse(localStorage[this.name]);
+			
+				this.listArr.forEach(function(x){
+					x.editModeTitle=false;
+					x.editModeSummary=false;
+				});
 
+			}
 		}
 			return this.listArr;
 	  }
