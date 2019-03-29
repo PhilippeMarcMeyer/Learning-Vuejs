@@ -6,16 +6,15 @@ let toStorage = null;
 let treeData  = null;
 // init :
 
-window.onload = function() {
+function resursiveInit() {
 	
-	message("<br /><h3>Please allow cookies as this app uses local storage to keep your todos...</h3>");
+  message("<br /><h3>Please allow cookies as this app uses local storage to keep your todos...</h3>");
 
-	
   toStorage = initLocalStorage();
  
  if(toStorage != null){
 
-	message("");
+	message("Welcome back !");
 	document.getElementById("titleZone").style.display="block";
 	document.getElementById("showTasks").style.display="block";
 	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
@@ -30,7 +29,7 @@ window.onload = function() {
 	
 	setListeners();
  }
-};
+}
 
 // init functions :
 

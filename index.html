@@ -1,83 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Vue.js</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-   	<link rel="stylesheet" href="./todo.css">
-	<style>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Vue.js</title>
+		<link rel="icon" href="pi.ico" />
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link rel="stylesheet" href="./todo.css">
+	</head>
+	 
+	<body>
+	<!-- item template -->
+		<script type="text/x-template" id="item-template">
+		  <li :class="{'inactive':item.done}">
+			<div
+			:class="{'bold': isParent,'task': !item.toDoTitle==''}">
+			  <div 
+			  v-show="item.toDoTitle != null" class="title">
+			  <i class="children fas fa-list-ol icon-left" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
+			  <span v-if="!item.editModeTitle" style="width:70%" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
+			  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
+				  <i class="fa fa-trash icon-right" @click="handleTrash(item)"></i>
+				  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item)"></i>
+				  <i 
+					:id="item.id" 
+					ondrop="drop(event)" 
+					ondragover="allowDrop(event)"
+					:draggable="!item.done"
+					:data-parent="item.parentId"  
+					ondragstart="drag(event)" 
+					:class="{'fa fa-arrows-alt icon-right mover': true,'noDrop':item.done}">
+				   </i>		  
+			  </div>
+			  <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}
+			  <span v-if="item.dueDate!=''" :class="{'cool':dueStatus=='cool','late':dueStatus=='late','soon':dueStatus=='soon','dueDate':true}">{{item.dueDate | getDateTimeStr}}</span>
+			  </div>
+			  <div v-else :class="{'note':true}">
+			  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
+			  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span><br />
+			  <span><input type="datetime-local" class="edit" v-model="item.dueDate"></span>
+			  </div>
+			</div>
+			<ul  v-show="isOpen" v-if="isParent">
+			  <tree-item
+				class="item"
+				v-for="(child, index) in item.childrenList"
+				:key="index"
+				:item="child"
+			  ></tree-item>
+			  <li  @click="addItem(item)"><i class="fas fa-plus"></i></li>
+			</ul>
+		  </li>
+		</script>
+		
+	<!-- dom -->
+		 <p id="titleZone" style="margin-bottom:4px;font-size:24px;color:#6D8FA4;font-weight:900;display:none;">Todo list</p>
+		 <div id="message"></div>
+		 <div id="showTasks" style="display:none;"><i class=""></i>&nbsp;Show done tasks </div>
 
-	</style>
- </head>
- <body>
-<!-- item template -->
-<script type="text/x-template" id="item-template">
-  <li :class="{'inactive':item.done}">
-    <div
-	:class="{'bold': isParent,'task': !item.toDoTitle==''}">
-	  <div 
-	  v-show="item.toDoTitle != null" class="title">
-	  <i class="children fas fa-list-ol icon-left" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
-	  <span v-if="!item.editModeTitle" style="width:70%" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
-	  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
-		  <i class="fa fa-trash icon-right" @click="handleTrash(item)"></i>
-		  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item)"></i>
-		  <i 
-			:id="item.id" 
-			ondrop="drop(event)" 
-			ondragover="allowDrop(event)"
-			:draggable="!item.done"
-			:data-parent="item.parentId"  
-			ondragstart="drag(event)" 
-			:class="{'fa fa-arrows-alt icon-right mover': true,'noDrop':item.done}">
-		   </i>		  
-	  </div>
-      <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}
-	  <span v-if="item.dueDate!=''" :class="{'cool':dueStatus=='cool','late':dueStatus=='late','soon':dueStatus=='soon','dueDate':true}">{{item.dueDate | getDateTimeStr}}</span>
-	  </div>
-	  <div v-else :class="{'note':true}">
-	  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
-	  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span><br />
-	  <span><input type="datetime-local" class="edit" v-model="item.dueDate"></span>
-	  </div>
-    </div>
-    <ul  v-show="isOpen" v-if="isParent">
-      <tree-item
-        class="item"
-        v-for="(child, index) in item.childrenList"
-        :key="index"
-        :item="child"
-      ></tree-item>
-      <li  @click="addItem(item)"><i class="fas fa-plus"></i></li>
-    </ul>
-  </li>
-</script>
+		 <ul id="todoList">
+		  <tree-item
+			class="item"
+			:item="treeData"
+		  ></tree-item>
+		</ul>
 
-	 <p id="titleZone" style="margin-bottom:4px;font-size:24px;color:#6D8FA4;font-weight:900;display:none;">Todo list</p>
-	 <div id="message"></div>
-	 <div id="showTasks" style="display:none;"><i class=""></i>&nbsp;Show done tasks </div>
+		<div class="buttons" style="display:none;">
+			<button class="btn-red btn-left btn-small"  onclick="doImport()">Let it rain</button>		
+			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the clouds</button>
+		   
+		</div>
 
-	 <ul id="todoList">
-	  <tree-item
-		class="item"
-		:item="treeData"
-	  ></tree-item>
-	</ul>
-	
-	<div class="buttons" style="display:none;">
-		<button class="btn-red btn-left btn-small"  onclick="doImport()">Let it rain</button>		
-		<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the clouds</button>
-       
-	</div>
-	
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	
-	<script type="text/javascript" src="storage.js"></script>
-	<script type="text/javascript" src="clouds.js"></script>
-	<script type="text/javascript" src="recursive.js"></script>
-	
- </body>
+		<!-- scripts -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script type="text/javascript" src="storage.js"></script>
+		<script type="text/javascript" src="clouds.js"></script>
+		<script type="text/javascript" src="recursive.js"></script>
+
+		<script type="text/javascript">
+			if(document.readyState == "loading"){
+				document.addEventListener("DomContentLoaded",resursiveInit);
+			}else{
+				resursiveInit();
+			}
+		</script>
+	</body>
 </html>
