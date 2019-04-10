@@ -70,11 +70,10 @@
 		</ul>
 
 		<div class="buttons" style="display:none;">
-			<button class="btn-red btn-left btn-small"  onclick="doImport()">Let it rain</button>		
-			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the clouds</button>
+			<button class="btn-red btn-left btn-small"  onclick="doImport()">Get from the cloud</button>		
+			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the cloud</button>
 		   
 		</div>
-
 		<!-- scripts -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script type="text/javascript" src="storage.js"></script>
@@ -82,11 +81,7 @@
 		<script type="text/javascript" src="recursive.js"></script>
 
 		<script type="text/javascript">
-			if(document.readyState == "loading"){
-				document.addEventListener("DomContentLoaded",resursiveInit);
-			}else{
-				resursiveInit();
-			}
+			window.onload = resursiveInit;
 		</script>
 	</body>
 </html>

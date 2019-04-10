@@ -421,4 +421,52 @@ function drop(ev) {
   }
 }
 
+function treeFlatten(tree,flatArray){
+	if(!Array.isArray(tree)){
+		tree = tree.childrenList;
+	}
+	if(!flatArray){
+		flatArray = [];
+	}
+	tree.forEach(function(x,i){
+		let node = JSON.parse(JSON.stringify(x));
+		node.childrenList = [];
+		flatArray.push(node);
+		if(x.childrenList.length != 0){
+			treeFlatten(x.childrenList,flatArray);
+		}
+	});
+	return flatArray;
+}
+
+function mergeData(remote,local,treeRemote,treeLocal){
+
+	if(!treeRemote) treeRemote = remote;
+	if(!treeLocal) treeLocal = local;
+	if(!Array.isArray(treeLocal)){
+		treeLocal = treeLocal.childrenList;
+	}
+	let parentId = 0;
+	treeRemote.forEach(function(rem,i){
+	
+		let found = false;
+		treeLocal.forEach(function(loc,i){
+				parentId = loc.parentId;
+			if(loc.id == rem.id){
+				found = true;
+			}
+		/*	
+		if(x.childrenList.length != 0){
+			remote = mergeData(x.childrenList);
+		}
+		*/
+		if(!found){
+			let data = JSON.parse(JSON.stringify(rem));
+			data.parentId = parentId;
+			treeLocal.push(data);
+		}
+		});
+	});
+	return remote;
+}
 

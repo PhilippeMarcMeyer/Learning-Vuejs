@@ -103,8 +103,12 @@ function storageList(listName){
 		this.listArr = [];
 		if(this.storageOK){
 			if (localStorage.getItem(this.name)!= null){
-				this.listArr= JSON.parse(localStorage[this.name]);
-			
+				let dataGet = JSON.parse(localStorage[this.name]);
+				
+				if(!Array.isArray(dataGet)){
+					dataGet = dataGet.childrenList;
+				}
+				this.listArr= dataGet;
 				this.listArr.forEach(function(x){
 					x.editModeTitle=false;
 					x.editModeSummary=false;

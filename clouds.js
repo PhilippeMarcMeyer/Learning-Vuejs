@@ -1,5 +1,5 @@
 
-let key = "xxxx-xx-xx-xxx-xxxx"; // put your own
+let key = "xxxxxxx";
 function doImport(){
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
@@ -7,12 +7,50 @@ function doImport(){
 
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
-		var data = JSON.parse(request.responseText);
-			toStorage.addall(data);
+		let remoteData = JSON.parse(request.responseText);
+		let remoteFlat = treeFlatten(remoteData);
+		let localFlat = treeFlatten(appTodo.treeData.childrenList);
+		let localSaved = [];
+		localFlat.forEach(function(loc){
+			let found = false;
+			remoteFlat.forEach(function(rem){
+				if(loc.id == rem.id){
+					found = true;
+				}
+			});
+			if(!found){
+				localSaved.push(loc);
+			}
+		});
+		if(localSaved.length >0){
+			let savedTasks = {};
+			  savedTasks.id = Date.now();
+			  savedTasks.parentId = 0;
+			  savedTasks.toDoTitle = "Saved tasks";
+			  savedTasks.toDoSummary = "List of saved tasks : ";
+			  savedTasks.done = false;
+			  savedTasks.order = savedTasks.id;
+			  savedTasks.childrenList = [],
+			  savedTasks.editModeTitle=false,
+			  savedTasks.editModeSummary=false,
+			  
+			localSaved.forEach(function(x){
+				x.parentId = savedTasks.id;
+				savedTasks.childrenList.push(x);
+			});
+		   remoteData.push(savedTasks);
+		}
+		
+		let letsGo = true;
+		if(letsGo){
+			toStorage.addall(remoteData);
+						
 			message("You precious data is back !");
 			setTimeout(function(){
 				location.reload();
 			},1000);
+		}
+					
 	  } else {
 			message("We reached our target server, but it returned an error :-(");
 
