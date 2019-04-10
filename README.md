@@ -21,14 +21,16 @@ Recursive ToDolist with local storage
 
 - Deploy/hide the childre branches by clicking on the List icon left to the title
 
-- Back-up you data to use from another computer : "Save to the clouds" button
+- Back-up you data to use from another computer : "Save to the cloud" button
 
-- Retrieve you data from the cloud by clicking on 'Let it rain"
+- Retrieve you data from the cloud by clicking on "Get from the cloud"
 
 03/27/2019 : Added sorting by drag and drop on the same branch
 
 03/27/2019 : Added a due date (optional) with colors (orange if soon < 1 day, red if late, green otherwise)
 
 03/28/2019 : Correction bug relative to the input title => Removing "new" to enter real title was putting back "new"
+
+04/09/2019 : the button "Get from the cloud" preserves unsaved local tasks listing them in a new task called "Saved tasks"
 
 ![screen shot](https://raw.githubusercontent.com/PhilippeMarcMeyer/Learning-Vuejs/master/screen.png)
