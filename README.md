@@ -35,6 +35,6 @@ Recursive ToDolist with local storage
 
 04/11/2019 : the button "Get from the cloud" preserves unsaved local tasks putting them back in the tree
 
-I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
+### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
 
 ![screen shot](https://raw.githubusercontent.com/PhilippeMarcMeyer/Learning-Vuejs/master/screen.png)
