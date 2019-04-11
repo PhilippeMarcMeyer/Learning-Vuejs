@@ -33,4 +33,5 @@ Recursive ToDolist with local storage
 
 04/09/2019 : the button "Get from the cloud" preserves unsaved local tasks listing them in a new task called "Saved tasks"
 
+04/11/2019 : the button "Get from the cloud" preserves unsaved local tasks putting them back in the tree
 ![screen shot](https://raw.githubusercontent.com/PhilippeMarcMeyer/Learning-Vuejs/master/screen.png)

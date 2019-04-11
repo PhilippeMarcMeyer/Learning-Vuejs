@@ -22,7 +22,7 @@
 			  <div 
 			  v-show="item.toDoTitle != null" class="title">
 			  <i class="children fas fa-list-ol icon-left" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
-			  <span v-if="!item.editModeTitle" style="width:70%" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
+			  <span v-if="!item.editModeTitle" class="titleLong" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
 			  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
 				  <i class="fa fa-trash icon-right" @click="handleTrash(item)"></i>
 				  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item)"></i>

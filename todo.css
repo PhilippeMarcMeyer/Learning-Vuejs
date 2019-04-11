@@ -46,6 +46,16 @@
 		position: relative;
 		padding-right:18px;
 	}
+	
+	.titleShort{
+		width: 70%;
+	}
+	
+	.titleLong{
+		width: 70%;
+		display:inline-block;
+	}
+	
 	.children span {
 		position: absolute;
 		font-size: 14px;

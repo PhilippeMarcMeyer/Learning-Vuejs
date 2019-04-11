@@ -1,19 +1,15 @@
 // globals :
-
 let showDone = false;
 let appTodo = null;
 let toStorage = null;
 let treeData  = null;
 // init :
-
 function resursiveInit() {
 	
   message("<br /><h3>Please allow cookies as this app uses local storage to keep your todos...</h3>");
-
   toStorage = initLocalStorage();
  
  if(toStorage != null){
-
 	message("Welcome back !");
 	document.getElementById("titleZone").style.display="block";
 	document.getElementById("showTasks").style.display="block";
@@ -30,9 +26,7 @@ function resursiveInit() {
 	setListeners();
  }
 }
-
 // init functions :
-
 function initLocalStorage(){
 	let toStorage = new storageList("todos");
 	if(toStorage.storageOK){
@@ -56,7 +50,6 @@ function prepareData(list){
 		  child.editModeSummary=false,
 		  list.push(child);
 	}
-
 	let treeData ={
 	 dueDate:"",
 	 toDoTitle: null,
@@ -279,9 +272,7 @@ function setListeners(){
 		document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide" ;
 	});
 }
-
 // utilities :
-
 var setInverse = function(tree,parentId,srcId,destId){
 	if(parentId == 0){
 		let offsetSrc = -1;
@@ -334,6 +325,7 @@ var setInverse = function(tree,parentId,srcId,destId){
 		}
 	}
 }
+
 var setDoneChildren = function(tree,isDone){
 		tree.forEach(function(x,i){
 		x.done = isDone;
@@ -344,6 +336,7 @@ var setDoneChildren = function(tree,isDone){
 	});
 	save();
 }
+
 var deleteElement = function(tree,item){
 	let id = item.id;
 	let parentId = item.parentId;
@@ -359,6 +352,7 @@ var deleteElement = function(tree,item){
 		tree.splice(offset,1);
 	}
 }
+
 function sortBranches (tree){
 	if(!Array.isArray(tree)){
 		tree = tree.childrenList;
@@ -372,6 +366,7 @@ function sortBranches (tree){
 		}
 	});
 }
+
 function checkData(tree){
 	if(!Array.isArray(tree)){
 		tree = tree.childrenList;
@@ -439,34 +434,42 @@ function treeFlatten(tree,flatArray){
 	return flatArray;
 }
 
-function mergeData(remote,local,treeRemote,treeLocal){
-
-	if(!treeRemote) treeRemote = remote;
-	if(!treeLocal) treeLocal = local;
-	if(!Array.isArray(treeLocal)){
-		treeLocal = treeLocal.childrenList;
+function mergeSavedTasks(savedTasks,tree){
+	if(!Array.isArray(tree)){
+		tree = tree.childrenList;
 	}
-	let parentId = 0;
-	treeRemote.forEach(function(rem,i){
+    let rootTasks = savedTasks.filter(function(x){
+		return x.parentId==-99;
+	});;
 	
-		let found = false;
-		treeLocal.forEach(function(loc,i){
-				parentId = loc.parentId;
-			if(loc.id == rem.id){
-				found = true;
-			}
-		/*	
-		if(x.childrenList.length != 0){
-			remote = mergeData(x.childrenList);
-		}
-		*/
-		if(!found){
-			let data = JSON.parse(JSON.stringify(rem));
-			data.parentId = parentId;
-			treeLocal.push(data);
-		}
-		});
+	rootTasks.forEach(function(x,i){
+		tree.push(x);
 	});
-	return remote;
+	
+	let nonRootTasks = savedTasks.filter(function(x){
+		return x.parentId!=-99;
+	});
+	let foundTasks = []
+	mergeSavednonRootTasks(nonRootTasks,tree,foundTasks);
+	
 }
 
+function mergeSavednonRootTasks(nonRootTasks,branch,foundTasks){
+	nonRootTasks.forEach(function(x,i){
+		branch.forEach(function(y,i){
+			if(x.parentId == y.id){
+				foundTasks.push(x.id);
+				y.childrenList.push(x);
+			}else{
+				if(y.childrenList!= null && y.childrenList.length >0){
+					let taskList = nonRootTasks.filter(function(x){
+						return foundTasks.indexOf(x.id) == -1;
+					});
+					if(taskList.length >0){
+						mergeSavednonRootTasks(taskList,y.childrenList,foundTasks)
+					}
+				}	
+			}
+		});
+	});
+}
