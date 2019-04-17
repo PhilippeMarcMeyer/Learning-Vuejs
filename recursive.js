@@ -10,7 +10,7 @@ function resursiveInit() {
   toStorage = initLocalStorage();
  
  if(toStorage != null){
-	message("Welcome back !");
+	message("Getting things ready...");
 	document.getElementById("titleZone").style.display="block";
 	document.getElementById("showTasks").style.display="block";
 	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
@@ -269,7 +269,13 @@ function initApp(treeData){
 			let parentId = source.parentId;
 			setInverse(treeData.childrenList,parentId,srcId,destId);
 		}
-	  }
+	  },beforeCreate : function(){
+			showLoader();  
+		},
+		mounted : function(){
+			hideLoader();  
+			message("Welcome back !");
+		},
 	});
 }
 
@@ -513,4 +519,20 @@ function showKeyInput(cloudkey){
 function hideKeyInput(){
 	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
 	document.getElementsByClassName("getCloudKey")[0].style.display="none";
+}
+
+function showLoader() {
+	let loaderElt = document.getElementById("loader");
+    if (loaderElt) { 
+		document.getElementById("loader_anim").style.display="block";
+       loaderElt.style.display="block";
+    }
+}
+
+function hideLoader() {
+	let loaderElt = document.getElementById("loader");
+    if (loaderElt) { 
+		document.getElementById("loader_anim").style.display="none";
+       loaderElt.style.display="none";
+    }
 }

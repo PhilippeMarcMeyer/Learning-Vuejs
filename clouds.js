@@ -1,6 +1,7 @@
 
 let cloudkey = "";
 function doImport(){
+	showLoader();  
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
 	request.open('GET', home+"/"+cloudkey, true);
@@ -36,22 +37,26 @@ function doImport(){
 			appTodo.treeDatas = treeData;
 						
 			message("You precious data is back !");
+			hideLoader();  
 		}
 					
 	  } else {
 			message("We reached our target server, but it returned an error :-(");
 			showKeyInput(cloudkey);
+			hideLoader();  
 	  }
 	};
 
 	request.onerror = function() {
 		message("There was a connection error of some sort :-(");
+		hideLoader();  
 	};
 
 	request.send();	
 }
 
 function doExport(){
+	showLoader();  
 	let home = "https://jsonblob.com/api/jsonBlob/"
 	var request = new XMLHttpRequest();
 	var params = appTodo.treeData.childrenList;
@@ -61,13 +66,16 @@ function doExport(){
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 			message("You precious data is saved !");
+			hideLoader(); 
 	  } else {
 			message("We reached our target server, but it returned an error :-(");
+			hideLoader(); 
 	  }
 	};
 
 	request.onerror = function() {
 		message("There was a connection error of some sort :-(");
+		hideLoader(); 
 	};
 
 	request.send(JSON.stringify(params));		
