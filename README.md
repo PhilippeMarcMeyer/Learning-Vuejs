@@ -37,6 +37,8 @@ Recursive ToDolist with local storage
 
 04/17/2019 : no https://jsonblob.com/api/jsonBlob/ key => hide cloud buttons.
 Css : responsive and warning message under width 320px
+
+Caching todoApp to use it offline on my phone
 no drag and drop icons on touch screen
 
 ### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
