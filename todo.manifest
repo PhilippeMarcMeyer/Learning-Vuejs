@@ -1,0 +1,19 @@
+CACHE MANIFEST
+ 
+# Version 0.1
+
+CACHE:
+https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext
+https://fonts.googleapis.com/css?family=Roboto:300,500
+https://use.fontawesome.com/releases/v5.3.1/css/all.css
+/todo.css
+https://cdn.jsdelivr.net/npm/vue/dist/vue.js
+/storage.js
+/clouds.js
+/recursive.js
+/pi.ico
+
+FALLBACK:
+
+NETWORK:
+*
