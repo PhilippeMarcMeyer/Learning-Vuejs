@@ -1,5 +1,5 @@
 
-let key = "xxxx";
+let key = "";
 function doImport(){
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
@@ -24,26 +24,6 @@ function doImport(){
 		});
 		if(localSaved.length >0){
 			mergeSavedTasks(localSaved,remoteData);
-			
-			
-			/*
-			let savedTasks = {};
-			  savedTasks.id = Date.now();
-			  savedTasks.parentId = 0;
-			  savedTasks.toDoTitle = "Saved tasks";
-			  savedTasks.toDoSummary = "List of saved tasks : ";
-			  savedTasks.done = false;
-			  savedTasks.order = savedTasks.id;
-			  savedTasks.childrenList = [],
-			  savedTasks.editModeTitle=false,
-			  savedTasks.editModeSummary=false,
-			  
-			localSaved.forEach(function(x){
-				x.parentId = savedTasks.id;
-				savedTasks.childrenList.push(x);
-			});
-		   remoteData.push(savedTasks);
-		   */
 		}
 		
 		let letsGo = true;
@@ -99,5 +79,6 @@ function message(msg){
 		ptr.innerHTML = msg;
 	}
 }
+
 
 

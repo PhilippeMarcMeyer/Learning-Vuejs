@@ -24,8 +24,8 @@
 			  <i class="children fas fa-list-ol icon-left" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
 			  <span v-if="!item.editModeTitle" class="titleLong" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
 			  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
-				  <i class="fa fa-trash icon-right" @click="handleTrash(item)"></i>
-				  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right" @click="handleHide(item)"></i>
+				  <i class="fa fa-trash icon-right icon-1" @click="handleTrash(item)"></i>
+				  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right icon-2" @click="handleHide(item)"></i>
 				  <i 
 					:id="item.id" 
 					ondrop="drop(event)" 
@@ -56,19 +56,17 @@
 			</ul>
 		  </li>
 		</script>
-		
 	<!-- dom -->
-		 <p id="titleZone" style="margin-bottom:4px;font-size:24px;color:#6D8FA4;font-weight:900;display:none;">Todo list</p>
+		 <p id="titleZone">Todo list</p>
 		 <div id="message"></div>
-		 <div id="showTasks" style="display:none;"><i class=""></i>&nbsp;Show done tasks </div>
-
+         <span id="tooSmall">Your device is too small, sorry :-(</span>
+		 <div id="showTasks" style="display:none;"><i class=""></i><span id="showTaskLabel">&nbsp;Show done tasks</span></div>
 		 <ul id="todoList">
 		  <tree-item
 			class="item"
 			:item="treeData"
 		  ></tree-item>
 		</ul>
-
 		<div class="buttons" style="display:none;">
 			<button class="btn-red btn-left btn-small"  onclick="doImport()">Get from the cloud</button>		
 			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the cloud</button>

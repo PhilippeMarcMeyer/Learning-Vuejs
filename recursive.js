@@ -24,6 +24,10 @@ function resursiveInit() {
 	appTodo = initApp(treeData); 
 	
 	setListeners();
+	
+	if(key == ""){
+		document.querySelectorAll(".buttons").forEach(function(x){x.style.display="none"});
+	}
  }
 }
 // init functions :
@@ -186,6 +190,7 @@ function loadVueComponent(){
 			save();
 		},
 		editTitle:function(item){
+			if(item.id == -99) return;
 			message("");
 			item.editModeTitle=true;
 		},
@@ -197,6 +202,7 @@ function loadVueComponent(){
 			}
 		},
 		editSummary:function(item){
+			if(item.id == -99) return;
 			message("");
 			item.editModeSummary=true;
 		},
