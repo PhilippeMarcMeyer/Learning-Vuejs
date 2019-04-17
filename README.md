@@ -35,6 +35,10 @@ Recursive ToDolist with local storage
 
 04/11/2019 : the button "Get from the cloud" preserves unsaved local tasks putting them back in the tree
 
+04/17/2019 : no https://jsonblob.com/api/jsonBlob/ key => hide cloud buttons.
+Css : responsive and warning message under width 320px
+no drag and drop icons on touch screen
+
 ### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
 
 ![screen shot](https://raw.githubusercontent.com/PhilippeMarcMeyer/Learning-Vuejs/master/screen.png)
