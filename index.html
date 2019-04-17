@@ -70,7 +70,13 @@
 		<div class="buttons" style="display:none;">
 			<button class="btn-red btn-left btn-small"  onclick="doImport()">Get from the cloud</button>		
 			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the cloud</button>
-		   
+		</div>
+		<div class="getCloudKey" style="display:none;">
+			&nbsp;Enter your Cloud key from https://jsonblob.com/api/jsonBlob/ : <br />
+			<span class="falseEdit">
+				&nbsp;<input class="edit" id="cloudKeyValue">&nbsp;<i aria-hidden="true"  id="setCloudKey" class="fa fa-check" style="border-left: 1px solid black; padding-left: 1px;"></i>
+				&nbsp;<i id="cloudKeyHide" class="fa fa-eye-slash"></i>
+			</span>
 		</div>
 		<!-- scripts -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

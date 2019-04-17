@@ -1,9 +1,9 @@
 
-let key = "";
+let cloudkey = "";
 function doImport(){
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
-	request.open('GET', home+"/"+key, true);
+	request.open('GET', home+"/"+cloudkey, true);
 
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
@@ -40,7 +40,7 @@ function doImport(){
 					
 	  } else {
 			message("We reached our target server, but it returned an error :-(");
-
+			showKeyInput(cloudkey);
 	  }
 	};
 
@@ -55,7 +55,7 @@ function doExport(){
 	let home = "https://jsonblob.com/api/jsonBlob/"
 	var request = new XMLHttpRequest();
 	var params = appTodo.treeData.childrenList;
-	request.open('PUT', home+key, true);
+	request.open('PUT', home+cloudkey, true);
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
 	request.onload = function() {
@@ -79,6 +79,5 @@ function message(msg){
 		ptr.innerHTML = msg;
 	}
 }
-
 
 

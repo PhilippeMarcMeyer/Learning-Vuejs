@@ -25,8 +25,14 @@ function resursiveInit() {
 	
 	setListeners();
 	
-	if(key == ""){
-		document.querySelectorAll(".buttons").forEach(function(x){x.style.display="none"});
+	if (localStorage.getItem("cloudkey")== null){
+		localStorage["cloudkey"]= "";
+	}
+	cloudkey = localStorage.getItem("cloudkey");
+	if(cloudkey == ""){
+		showKeyInput();
+	}else{
+		hideKeyInput();
 	}
  }
 }
@@ -277,6 +283,22 @@ function setListeners(){
 		this.className = classList;
 		document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide" ;
 	});
+	let setCloudKeyPtr = document.getElementById("setCloudKey");
+	setCloudKeyPtr.addEventListener("click", function(){
+		cloudkey =  document.getElementById("cloudKeyValue").value;
+		localStorage["cloudkey"] = cloudkey;	
+		if(cloudkey == ""){
+			showKeyInput()
+		}else{
+			document.getElementsByClassName("getCloudKey")[0].style.display="none";
+			document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
+		}
+	});
+		let cloudKeyHidePtr = document.getElementById("cloudKeyHide");
+		cloudKeyHidePtr.addEventListener("click", function(){
+		document.getElementsByClassName("getCloudKey")[0].style.display="none";
+		message("You can still use TodoList on this device :-)");
+	});
 }
 // utilities :
 var setInverse = function(tree,parentId,srcId,destId){
@@ -478,4 +500,17 @@ function mergeSavednonRootTasks(nonRootTasks,branch,foundTasks){
 			}
 		});
 	});
+}
+
+function showKeyInput(cloudkey){
+	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="none"});
+	document.getElementsByClassName("getCloudKey")[0].style.display="block";
+	if(cloudkey){
+		document.getElementsByClassName("getCloudKey")[0].value = cloudkey;
+	}
+}
+
+function hideKeyInput(){
+	document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
+	document.getElementsByClassName("getCloudKey")[0].style.display="none";
 }

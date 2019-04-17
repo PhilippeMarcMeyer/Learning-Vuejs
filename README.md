@@ -41,6 +41,11 @@ Css : responsive and warning message under width 320px
 Caching todoApp to use it offline on my phone
 no drag and drop icons on touch screen
 
+The cloud key is not in the code anymore, you've got to input it once so it is kept inside localStorage.
+
+Goto to https://jsonblob.com/ and input [] inside the left field then make request POST and copy the id of your post
+then past it in todoList when asked.
+
 ### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
 
 ![screen shot](https://raw.githubusercontent.com/PhilippeMarcMeyer/Learning-Vuejs/master/screen.png)
