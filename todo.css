@@ -163,7 +163,7 @@
 	}	
 	.btn-right{
 		float:right;
-		margin-right:5px;
+		margin-right:5%;
 	}	
 	.btn-left{
 		float:left;
@@ -176,7 +176,8 @@
 	    padding-left: 1em;
 	  	margin:3px 0px 10px 24px;
 		line-height: 1.5em;
-		width:400px;
+		width:95%;
+		
 	}
 	.done-show li.inactive{
 		opacity: 0.5;
