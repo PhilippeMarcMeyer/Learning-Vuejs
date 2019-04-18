@@ -339,7 +339,7 @@
 			margin-left:20px;
 		}
 		.buttons .btn-right{
-			margin-right:2%;
+			margin-right:calc(2% -3px);
 		}
 	
 	}
