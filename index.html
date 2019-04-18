@@ -14,9 +14,9 @@
 	</head>
 	 
 	<body>
-	<div id="loader" style="display:none;">
-        <div id="loader_anim"></div>
-    </div>
+		<div id="loader" style="display:none;">
+			<div id="loader_anim"></div>
+		</div>
 	<!-- item template -->
 		<script type="text/x-template" id="item-template">
 		  <li :class="{'inactive':item.done}">
@@ -74,6 +74,7 @@
 			<button class="btn-red btn-left btn-small"  onclick="doImport()">Get from the cloud</button>		
 			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the cloud</button>
 		</div>
+
 		<div class="getCloudKey" style="display:none;">
 			&nbsp;Enter your Cloud key from https://jsonblob.com/api/jsonBlob/ : <br />
 			<span class="falseEdit">
@@ -81,6 +82,8 @@
 				&nbsp;<i id="cloudKeyHide" class="fa fa-eye-slash"></i>
 			</span>
 		</div>
+		
+		<div id="fullScreenToggler">hide bar</div>
 		<!-- scripts -->
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 		<script type="text/javascript" src="storage.js"></script>

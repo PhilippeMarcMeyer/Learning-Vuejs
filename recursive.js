@@ -35,6 +35,13 @@ function resursiveInit() {
 		hideKeyInput();
 	}
  }
+ if(window.innerWidth <= 640){
+	 let ptr = document.querySelector("#fullScreenToggler");
+	 if(ptr){
+		ptr.style.display = "inline-block";
+		ptr.innerHTML = "hide bar";
+	 }
+ }
 }
 // init functions :
 function initLocalStorage(){
@@ -305,6 +312,15 @@ function setListeners(){
 		document.getElementsByClassName("getCloudKey")[0].style.display="none";
 		message("You can still use TodoList on this device :-)");
 	});
+	document.getElementById("fullScreenToggler").addEventListener("click", function(){
+		if (document.fullscreenElement) { 
+			document.exitFullscreen();
+			this.innerHTML = "hide bar"
+		} else { 
+			document.documentElement.requestFullscreen();
+			this.innerHTML = "show bar"
+		} 
+});
 }
 // utilities :
 var setInverse = function(tree,parentId,srcId,destId){
@@ -536,3 +552,18 @@ function hideLoader() {
        loaderElt.style.display="none";
     }
 }
+window.onresize = function(){
+	let ptr = document.querySelector("#fullScreenToggler");
+	if(ptr != null){
+		if(window.innerWidth <= 640){
+			ptr.style.display = "inline-block";
+		}else{
+			ptr.style.display = "none";
+		} 
+		if (document.fullscreenElement) { 
+			ptr.innerHTML = "show bar"
+		} else { 
+			ptr.innerHTML = "hide bar"
+		} 
+	}
+};
