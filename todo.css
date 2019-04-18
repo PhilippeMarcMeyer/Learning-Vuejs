@@ -280,8 +280,8 @@
 		#fullScreenToggler{
 			text-align:center;
 			position:absolute;
-			width:100%;
-			top:4px;
+			left:12px;
+			top:30px;
 			user-select: none;
 			cursor:pointer;
 			color:grey;
