@@ -46,6 +46,8 @@ The cloud key is not in the code anymore, you've got to input it once so it is k
 Goto to https://jsonblob.com/ and input [] inside the left field then make request POST and copy the id of your post
 then past it in todoList when asked.
 
+04/19/2019 : A new cloud storage key is retrieved when needed. keep your key for yourself as you will need it to access the same cloud storage form another device :-)
+
 ### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
 
 ### DEMO : https://philippemarcmeyer.github.io/vueTodoList/index.html
