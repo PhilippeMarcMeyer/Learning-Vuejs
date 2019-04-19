@@ -48,7 +48,8 @@ then past it in todoList when asked.~~
 
 04/19/2019 : A new cloud storage key is retrieved when needed. keep your key for yourself as you will need it to access the same cloud storage form another device :-)
 
-### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
+#### I like this project not only for the Vuejs framework but for the intensive use of recursive functions :-)
+with a free cloud storage thanks to https://jsonblob.com/ !
 
 ### DEMO : https://philippemarcmeyer.github.io/vueTodoList/index.html
 
