@@ -301,7 +301,10 @@ function setListeners(){
 		cloudkey =  document.getElementById("cloudKeyValue").value;
 		localStorage["cloudkey"] = cloudkey;	
 		if(cloudkey == ""){
-			showKeyInput()
+			getNewKey(function(){
+				document.getElementsByClassName("getCloudKey")[0].style.display="none";
+				document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});
+			});
 		}else{
 			document.getElementsByClassName("getCloudKey")[0].style.display="none";
 			document.querySelectorAll(".buttons").forEach(function(x){x.style.display="block"});

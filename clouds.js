@@ -1,5 +1,38 @@
 
 let cloudkey = "";
+
+function getNewKey(callBack){
+	showLoader();  
+	let home = "https://jsonblob.com/api/jsonBlob/"
+	var request = new XMLHttpRequest();
+	var params = appTodo.treeData.childrenList;
+	request.open('POST', home, true);
+    request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	
+	request.onload = function() {
+	  if (request.status >= 200 && request.status < 400) {
+		   let arr = request.getResponseHeader("location").split("/");;
+		   if(arr.length >0){
+			   cloudkey = arr[arr.length-1];
+			   localStorage["cloudkey"] = cloudkey;
+		   }
+			message("Your key is " + cloudkey+" it is saved on this device but copy it if you want to use it on another device");
+			hideLoader(); 
+			callBack();
+	  } else {
+			message("Could not get you a key => unexpected error :-(");
+			hideLoader(); 
+	  }
+	};
+
+	request.onerror = function() {
+		message("Could not get you a key => no connexion :-(");
+		hideLoader(); 
+	};
+
+	request.send(JSON.stringify(params));			
+}
+
 function doImport(){
 	showLoader();  
 	let home = "https://jsonblob.com/api/jsonBlob/";
