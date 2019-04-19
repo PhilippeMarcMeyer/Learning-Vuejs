@@ -323,7 +323,29 @@ function setListeners(){
 			document.documentElement.requestFullscreen();
 			this.innerHTML = "show bar"
 		} 
-});
+	});
+	
+	document.querySelector(".buttons .fas").addEventListener("click", function(){
+		let ptr = document.querySelector("#key-message");
+		let presentMsg = ptr.innerHTML;
+		if(presentMsg == ""){
+			message("Your cloudkey is : <br />" + cloudkey + "<br />Copy it to use it on another device ;-)","key-message");
+		}else{
+			message("","key-message");
+		}
+	});
+
+	document.querySelector("#titleZone .fas").addEventListener("click", function(){
+		let ptr = document.querySelector("#key-message");
+		let presentMsg = ptr.innerHTML;
+		if(presentMsg != ""){
+			message("","key-message");
+		}else{
+			message("Todo list keeps your tasks on this device.<br />In order to use them on another device, you need a cloud-storage key which todo list will get for you.<br />Copy your key to use it on the other device so the cloud storage will be the same every where :-)","key-message");
+			
+		}
+	});
+
 }
 // utilities :
 var setInverse = function(tree,parentId,srcId,destId){

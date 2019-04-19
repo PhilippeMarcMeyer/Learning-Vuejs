@@ -5,7 +5,7 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Vue.js</title>
+		<title>Todo list</title>
 		<link rel="icon" href="pi.ico" />
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,500">
@@ -60,7 +60,7 @@
 		  </li>
 		</script>
 	<!-- dom -->
-		 <p id="titleZone">Todo list</p>
+		 <p id="titleZone">Todo list <i class="fas fa-info-circle"></i></p>
 		 <div id="message"></div>
          <span id="tooSmall">Your device is too small, sorry :-(</span>
 		 <div id="showTasks" style="display:none;"><i class=""></i><span id="showTaskLabel">&nbsp;Show done tasks</span></div>
@@ -71,8 +71,9 @@
 		  ></tree-item>
 		</ul>
 		<div class="buttons" style="display:none;">
-			<button class="btn-red btn-left btn-small"  onclick="doImport()">Get from the cloud</button>		
+			<button class="btn-red btn-left btn-small"  onclick="doImport()">Get from the cloud</button>&nbsp;<i class="fas fa-key"></i>	
 			<button class="btn-blue btn-right btn-small" onclick="doExport()">Save to the cloud</button>
+			<div id="key-message"></div>
 		</div>
 
 		<div class="getCloudKey" style="display:none;">

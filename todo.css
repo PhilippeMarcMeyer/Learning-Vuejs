@@ -163,12 +163,15 @@
 	}	
 	.btn-right{
 		float:right;
+		cursor:pointer;
 	}	
+	
 	.buttons .btn-right{
 		margin-right:5%;
 	}
 	.btn-left{
 		float:left;
+		cursor:pointer;
 	}	
 	li div{
 		position:relative;
@@ -179,8 +182,8 @@
 	  	margin:3px 0px 10px 24px;
 		line-height: 1.5em;
 		width:95%;
-		
 	}
+			
 	.done-show li.inactive{
 		opacity: 0.5;
 	}
@@ -230,8 +233,11 @@
 		color: rgb(109, 143, 164); 
 		font-weight: 900; 
 		display: block;
+		user-select:none;
 	}
-	
+	#titleZone .fas{
+		cursor:pointer;
+	}
 	
 	#message{
 		position:absolute;
@@ -284,8 +290,24 @@
 		height :18px;
 	}
 	
+	#key-message{
+		display:inline-block;
+		margin-top:2px;
+		color: rgb(164, 109 , 143); 
+		font-size :16px;
+		font-weight:bold;
+		width:90%;
+		max-width:90%;
+		margin: 2px 0 2px 0;
+		text-align:center;
+	}
+	
 	#fullScreenToggler{
 		display:none;
+	}
+	
+	.buttons .fas{
+		cursor:pointer
 	}
 	
 	@media (pointer: coarse) { 
@@ -381,6 +403,14 @@
 			width:100%;
 			text-align:center;
 		}
+		#key-message{
+			color: rgb(164, 109 , 143); 
+			font-size :12px;
+			font-weight:normal;
+			text-align:left;
+			margin-top: 30px;
+			margin-left: -27px;
+		}
 		.titleLong{
 			width: 70%;
 			display:inline-block;
@@ -390,7 +420,12 @@
 			margin-left:20px;
 		}
 		.buttons .btn-right{
-			margin-right:calc(2% + 3px);		}
+			margin-right:calc(2% + 3px);		
+		}
+		.buttons .fas{
+			position:absolute;
+			margin-left:90px;
+		}
 	}
 	
 #loader {

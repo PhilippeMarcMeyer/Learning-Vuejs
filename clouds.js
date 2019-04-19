@@ -8,7 +8,8 @@ function getNewKey(callBack){
 	var params = appTodo.treeData.childrenList;
 	request.open('POST', home, true);
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-	
+	message("");
+	message("","key-message");
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 		   let arr = request.getResponseHeader("location").split("/");;
@@ -16,7 +17,7 @@ function getNewKey(callBack){
 			   cloudkey = arr[arr.length-1];
 			   localStorage["cloudkey"] = cloudkey;
 		   }
-			message("Your key is " + cloudkey+" it is saved on this device but copy it if you want to use it on another device");
+			message("Your key is " + cloudkey+" it is saved on this device but copy it if you want to use it on another device","key-message");
 			hideLoader(); 
 			callBack();
 	  } else {
@@ -38,7 +39,8 @@ function doImport(){
 	let home = "https://jsonblob.com/api/jsonBlob/";
 	var request = new XMLHttpRequest();
 	request.open('GET', home+"/"+cloudkey, true);
-
+	message("");
+	message("","key-message");
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 		let remoteData = JSON.parse(request.responseText);
@@ -95,7 +97,8 @@ function doExport(){
 	var params = appTodo.treeData.childrenList;
 	request.open('PUT', home+cloudkey, true);
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-
+	message("");
+	message("","key-message");
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 			message("You precious data is saved !");
@@ -114,8 +117,9 @@ function doExport(){
 	request.send(JSON.stringify(params));		
 }
 
-function message(msg){
-	let ptr = document.getElementById("message");
+function message(msg,altId){
+	let id = altId || "message";
+	let ptr = document.getElementById(id);
 	if(ptr){
 		ptr.innerHTML = msg;
 	}
