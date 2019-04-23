@@ -21,7 +21,7 @@ function resursiveInit() {
 	
 	loadVueComponent();
 	  
-	appTodo = initApp(treeData); 
+
 	
 	setListeners();
 	
@@ -41,6 +41,8 @@ function resursiveInit() {
 	
 	let showTasks = document.getElementById("showTasks");
 	showTasks.className = showDone ? 'fa fa-check-square' : 'fa fa-square';
+	
+	appTodo = initApp(treeData); 
  }
  if(window.innerWidth <= 640){
 	 let ptr = document.querySelector("#fullScreenToggler");
