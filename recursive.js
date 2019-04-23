@@ -20,10 +20,6 @@ function resursiveInit() {
 	treeData = prepareData(list);
 	
 	loadVueComponent();
-	  
-
-	
-	setListeners();
 	
 	if (localStorage.getItem("cloudkey")== null){
 		localStorage["cloudkey"]= "";
@@ -42,7 +38,10 @@ function resursiveInit() {
 	let showTasks = document.getElementById("showTasks");
 	showTasks.className = showDone ? 'fa fa-check-square' : 'fa fa-square';
 	
-	appTodo = initApp(treeData); 
+	appTodo = initApp(treeData,showDone); 
+	document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide";
+
+	setListeners();
  }
  if(window.innerWidth <= 640){
 	 let ptr = document.querySelector("#fullScreenToggler");
@@ -246,12 +245,12 @@ function loadVueComponent(){
 	});
 }
 
-function initApp(treeData){
+function initApp(treeData,showDoneTasks){
 	return new Vue({
 	  el: '#todoList',
 	  data: {
 		treeDatas: treeData,
-		showDone : showDone
+		showDone : showDoneTasks
 	  },
 	  computed:{
 		treeData: function () {
