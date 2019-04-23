@@ -38,6 +38,9 @@ function resursiveInit() {
 		localStorage["showDone"] = true;
 	}
 	showDone = localStorage.getItem("showDone");
+	
+	let showTasks = document.getElementById("showTasks");
+	showTasks.className = showTasks ? 'fa fa-check-square' : 'fa fa-square';
  }
  if(window.innerWidth <= 640){
 	 let ptr = document.querySelector("#fullScreenToggler");
