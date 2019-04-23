@@ -109,6 +109,7 @@
 	  font-weight:300;
 	  font-size:12px;
 	  cursor:pointer;
+	  margin-top:16px;
 	}
 	#showTaskLabel{
 	  font-family: Roboto, Arial, Menlo, Consolas, monospace !important;
