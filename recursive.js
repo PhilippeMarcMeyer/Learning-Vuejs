@@ -37,7 +37,7 @@ function resursiveInit() {
 	if (localStorage.getItem("showDone")== null){
 		localStorage["showDone"] = true;
 	}
-	showDone = localStorage.getItem("showDone");
+	showDone = (localStorage.getItem("showDone") == "true");
 	
 	let showTasks = document.getElementById("showTasks");
 	showTasks.className = showTasks ? 'fa fa-check-square' : 'fa fa-square';
