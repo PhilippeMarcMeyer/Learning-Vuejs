@@ -40,7 +40,7 @@ function resursiveInit() {
 	showDone = (localStorage.getItem("showDone") == "true");
 	
 	let showTasks = document.getElementById("showTasks");
-	showTasks.className = showTasks ? 'fa fa-check-square' : 'fa fa-square';
+	showTasks.className = showDone ? 'fa fa-check-square' : 'fa fa-square';
  }
  if(window.innerWidth <= 640){
 	 let ptr = document.querySelector("#fullScreenToggler");
