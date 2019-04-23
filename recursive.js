@@ -34,6 +34,10 @@ function resursiveInit() {
 	}else{
 		hideKeyInput();
 	}
+	if (localStorage.getItem("showDone")== null){
+		localStorage["showDone"] = true;
+	}
+	showDone = localStorage.getItem("showDone");
  }
  if(window.innerWidth <= 640){
 	 let ptr = document.querySelector("#fullScreenToggler");
@@ -242,7 +246,7 @@ function initApp(treeData){
 	  el: '#todoList',
 	  data: {
 		treeDatas: treeData,
-		showDone : true
+		showDone : showDone
 	  },
 	  computed:{
 		treeData: function () {
@@ -294,7 +298,8 @@ function setListeners(){
 		appTodo.showDone = !appTodo.showDone;
 		let classList = appTodo.showDone ? 'fa fa-check-square' : 'fa fa-square';
 		this.className = classList;
-		document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide" ;
+		document.getElementById("todoList").className = appTodo.showDone ? "done-show" : "done-hide";
+		localStorage["showDone"] = appTodo.showDone;
 	});
 	let setCloudKeyPtr = document.getElementById("setCloudKey");
 	setCloudKeyPtr.addEventListener("click", function(){
