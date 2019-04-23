@@ -8,6 +8,7 @@ function resursiveInit() {
 	
   message("<br /><h3>Please allow cookies as this app uses local storage to keep your todos...</h3>");
   toStorage = initLocalStorage();
+
  
  if(toStorage != null){
 	message("Getting things ready...");
@@ -601,3 +602,4 @@ window.onresize = function(){
 		} 
 	}
 };
+
