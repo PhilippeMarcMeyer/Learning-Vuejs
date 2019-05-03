@@ -112,6 +112,7 @@ function storageList(listName){
 				this.listArr.forEach(function(x){
 					x.editModeTitle=false;
 					x.editModeSummary=false;
+					if(x.shoppingList == undefined) x.shoppingList = null;
 				});
 
 			}

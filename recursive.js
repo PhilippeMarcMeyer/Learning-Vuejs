@@ -72,6 +72,7 @@ function prepareData(list){
 		  child.done = false;
 		  child.order = child.id;
 		  child.childrenList = [],
+		  child.shoppingList = null,
 		  child.editModeTitle=true,
 		  child.editModeSummary=false,
 		  list.push(child);
@@ -84,6 +85,7 @@ function prepareData(list){
 	 order:0,
 	 done: false,
 	 childrenList :list,
+	 shoppingList : null,
 	 childrenNr : list.length,
 	 parentId:0,
 	 editModeTitle:false,
@@ -156,6 +158,33 @@ function loadVueComponent(){
 		}
 	  },
 	  methods: {
+		  toggleShopping :function(shoppinItem){
+			  shoppinItem.done = !shoppinItem.done;
+			  save();
+		  },
+		 toggleShopping :function(item){
+		  if(!item.shoppingList){
+			   item.shoppingList=[];
+			  if(item.toDoSummary.length > 3){
+				  let arr = item.toDoSummary.split(/\r\n|\n|\r/);
+				  arr.forEach(function(x){
+					  item.shoppingList.push({"label":x,"done":false});
+				  });
+				
+			  }
+		  }else{
+			  if(item.shoppingList.length){
+				  item.toDoSummary = "";
+				  item.shoppingList.forEach(function(x){
+					  item.toDoSummary += x.label + "\r\n";
+				  });
+			  }else{
+				  item.toDoSummary = "...";
+			  }
+			  item.shoppingList = null;
+		  }
+		  save();
+		 },
 		toggle: function () {
 			message("");
 		  if (this.isParent) {
@@ -275,6 +304,7 @@ function initApp(treeData,showDoneTasks){
 		  child.done = false;
 		  child.order = child.id;
 		  child.childrenList = [],
+		  child.shoppingList = null,
 		  child.editModeTitle=true,
 		  child.editModeSummary=false,
 		  item.childrenList.push(child);

@@ -26,7 +26,15 @@
 			  v-show="item.toDoTitle != null" class="title">
 			  <i class="children fas fa-list-ol icon-left" @click="makeParent(item)"><span>{{item.childrenList.length}}</span></i>
 			  <span v-if="!item.editModeTitle" class="titleLong" @click="editTitle(item)"> {{item.toDoTitle}} <span class="datetime">{{item.id | getDateTime}}</span> </span>
-			  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i></span>
+			  <span v-else class="falseEdit"><input @change="saveTitle(item)"  class="edit" v-model="item.toDoTitle">&nbsp;
+				<i style="border-left: solid 1px black;padding-left:1px;" class="fa fa-check" @click="saveTitle(item)" aria-hidden="true"></i>
+				<span class="icon-3" @click="toggleShopping(item)">
+					<i class="fas fa-shopping-basket"></i>
+					<i v-if="item.shoppingList==null" class="far fa-square"></i> 
+					<i v-if="item.shoppingList!=null" class="far fa-check-square"></i> 
+				 </span>
+			 </span>
+
 				  <i class="fa fa-trash icon-right icon-1" @click="handleTrash(item)"></i>
 				  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right icon-2" @click="handleHide(item)"></i>
 				  <i 
@@ -37,16 +45,23 @@
 					:data-parent="item.parentId"  
 					ondragstart="drag(event)" 
 					:class="{'fa fa-arrows-alt icon-right mover': true,'noDrop':item.done}">
-				   </i>		  
+				   </i>		
+	
 			  </div>
-			  <div v-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}
-			  <span v-if="item.dueDate!=''" :class="{'cool':dueStatus=='cool','late':dueStatus=='late','soon':dueStatus=='soon','dueDate':true}">{{item.dueDate | getDateTimeStr}}</span>
+			  <div v-if="item.shoppingList != null" :class="{'note':true}">
+				<div class="shop-item" v-for="(tobuy, index) in item.shoppingList"><i v-if="tobuy.done"  @click="toggleShoppingDone(tobuy)" class="far fa-check-square"  @click="toggleShoppingDone(tobuy)"></i><i v-else class="far fa-square"></i> {{tobuy.label}}</div>
+			  </div>		  
+			  <div v-else-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}
+				<span v-if="item.dueDate!=''" :class="{'cool':dueStatus=='cool','late':dueStatus=='late','soon':dueStatus=='soon','dueDate':true}">{{item.dueDate | getDateTimeStr}}</span>
+
 			  </div>
 			  <div v-else :class="{'note':true}">
-			  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
-			  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span><br />
-			  <span><input type="datetime-local" class="edit" v-model="item.dueDate"></span>
+				  <textarea v-model="item.toDoSummary"  @change="saveSummary(item)"></textarea>
+				  &nbsp;<i class="fa fa-check summaryCheck" @click="saveSummary(item)" aria-hidden="true"></i></span><br />
+				  <span><input type="datetime-local" class="edit" v-model="item.dueDate"></span>
+ 
 			  </div>
+
 			</div>
 			<ul  v-show="isOpen" v-if="isParent">
 			  <tree-item
