@@ -144,7 +144,7 @@ function loadVueComponent(){
 		  },
 		  getDateTime:function(value){
 			  let months = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
-			  let days = ["mo","tu","we","fr","sa","su"];
+			  let days = ["mo","tu","we","th","fr","sa","su"];
 			  let d = new Date(value);
 			  let result = days[d.getDay()] +" "+ d.getDate()+"-" + months[d.getMonth()] +"-" + d.getFullYear() +" " + d.getHours() +":" + d.getMinutes();
 			  return result;
@@ -157,8 +157,8 @@ function loadVueComponent(){
 			}
 		}
 	  },
-	  methods: {
-		  toggleShopping :function(shoppinItem){
+	  methods: {//manifest="../todo.manifest"
+		  toggleShoppingDone :function(shoppinItem){
 			  shoppinItem.done = !shoppinItem.done;
 			  save();
 		  },
@@ -168,6 +168,7 @@ function loadVueComponent(){
 			  if(item.toDoSummary.length > 3){
 				  let arr = item.toDoSummary.split(/\r\n|\n|\r/);
 				  arr.forEach(function(x){
+					  if(x !="")
 					  item.shoppingList.push({"label":x,"done":false});
 				  });
 				

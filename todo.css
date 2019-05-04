@@ -187,7 +187,9 @@
 		line-height: 1.5em;
 		width:95%;
 	}
-			
+	.done{
+		opacity: 0.5;
+	}		
 	.done-show li.inactive{
 		opacity: 0.5;
 	}

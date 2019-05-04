@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" manifest="../todo.manifest">
+<html lang="en" >
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -49,7 +49,9 @@
 	
 			  </div>
 			  <div v-if="item.shoppingList != null" :class="{'note':true}">
-				<div class="shop-item" v-for="(tobuy, index) in item.shoppingList"><i v-if="tobuy.done"  @click="toggleShoppingDone(tobuy)" class="far fa-check-square"  @click="toggleShoppingDone(tobuy)"></i><i v-else class="far fa-square"></i> {{tobuy.label}}</div>
+				<div class="shop-item" @click="toggleShoppingDone(tobuy)"  :class="{'done':tobuy.done}" v-for="(tobuy, index) in item.shoppingList">
+					<i v-if="tobuy.done"  class="far fa-check-square" ></i>
+					<i v-else class="far fa-square"></i>&nbsp;{{tobuy.label}}</div>
 			  </div>		  
 			  <div v-else-if="!item.editModeSummary" @click="editSummary(item)" class="pre" :class="{'note':item.toDoSummary !=''}">{{ item.toDoSummary}}
 				<span v-if="item.dueDate!=''" :class="{'cool':dueStatus=='cool','late':dueStatus=='late','soon':dueStatus=='soon','dueDate':true}">{{item.dueDate | getDateTimeStr}}</span>
