@@ -157,7 +157,7 @@ function loadVueComponent(){
 			}
 		}
 	  },
-	  methods: {//manifest="../todo.manifest"
+	  methods: {
 		  toggleShoppingDone :function(shoppinItem){
 			  shoppinItem.done = !shoppinItem.done;
 			  save();
