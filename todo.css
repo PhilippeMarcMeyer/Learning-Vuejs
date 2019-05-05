@@ -39,7 +39,7 @@
 	.icon-right{
 		float:right;
 		margin: 4px 8px 8px 8px;
-	}	
+	}
 	.pre{
 	  display: block;
 	  white-space: pre-wrap;
@@ -51,16 +51,13 @@
 		position: relative;
 		padding-right:18px;
 	}
-	
 	.titleShort{
 		width: 70%;
 	}
-	
 	.titleLong{
 		width: 70%;
 		display:inline-block;
 	}
-	
 	.children span {
 		position: absolute;
 		font-size: 14px;
@@ -87,7 +84,7 @@
 		padding-left:2px;
 	}
 	input.edit{
-		width:60%;
+		width:50%;
 		border:none;
 		height:1em;
 		font-size: 12px;
@@ -116,10 +113,9 @@
 	}
 	#showTaskLabel{
 	  font-family: Roboto, Arial, Menlo, Consolas, monospace !important;
-	  color: #444;	
+	  color: #444;
 	  font-size:14px;
 	  font-weight:600;
-
 	}
 	li.inactive{
 	 opacity: 0.5;
@@ -143,7 +139,7 @@
 		text-shadow: 0 -1px 0 rgba(0,0,0,.2);
 		box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
 		background-repeat: repeat-x;
-	}	
+	}
 	.btn-small{
 		padding: 3px 8px;
 		min-width:60px;
@@ -157,26 +153,24 @@
 		color: #fff;
 		border-color: #802455;
 		background: linear-gradient(#A46D8F,#642D4F);
-
-	}	
+	}
 	.btn-blue{
 		background-color: #337ab7;
 		color: #fff;
 		border-color: #245580;
 		background: linear-gradient(#6D8FA4,#2D4F64);
-	}	
+	}
 	.btn-right{
 		float:right;
 		cursor:pointer;
-	}	
-	
+	}
 	.buttons .btn-right{
 		margin-right:5%;
 	}
 	.btn-left{
 		float:left;
 		cursor:pointer;
-	}	
+	}
 	li div{
 		position:relative;
 	}
@@ -189,7 +183,7 @@
 	}
 	.done{
 		opacity: 0.5;
-	}		
+	}
 	.done-show li.inactive{
 		opacity: 0.5;
 	}
@@ -223,63 +217,54 @@
 		border : 1px solid red;
 		background-color:orangered;
 	}
-	
 	.dueDate.soon{
 		border : 1px solid orangered;
 		background-color:orange;
 	}
-	
 	.dueDate.none{
 		display:none;
 	}
-	
 	#titleZone{
-		margin-bottom: 4px; 
-		font-size: 24px; 
-		color: rgb(109, 143, 164); 
-		font-weight: 900; 
+		margin-bottom: 4px;
+		font-size: 24px;
+		color: rgb(109, 143, 164);
+		font-weight: 900;
 		display: block;
 		user-select:none;
 	}
 	#titleZone .fas{
 		cursor:pointer;
 	}
-	
 	#message{
 		position:absolute;
 		margin-top:-5px;
-		color: rgb(164, 109 , 143); 
+		color: rgb(164, 109 , 143);
 		font-size :16px;
 		font-weight:900;
 		width:100%;
 		text-align:center;
 	}
-	
 	.getCloudKey{
 		margin-left:40px;
 	}
-	
 	.getCloudKey h3{
-		margin-bottom: 6px; 
-		font-size: 16px; 
-		color: rgb(109, 143, 164); 
-		font-weight: 900; 
+		margin-bottom: 6px;
+		font-size: 16px;
+		color: rgb(109, 143, 164);
+		font-weight: 900;
 		display: block;
 	}
-	
 	.getCloudKey h5{
-		margin-bottom: 6px; 
-		font-size: 12px; 
+		margin-bottom: 6px;
+		font-size: 12px;
 		color: grey;
 		display: block;
 	}
-	
 	.getCloudKey p{
-		font-size: 12px; 
+		font-size: 12px;
 		color: grey;
 		display: block;
 	}
-	
 	.getCloudKey div{
 		border: solid 1px grey;
 		border-radius: 4px;
@@ -287,7 +272,6 @@
 		max-width:500px;
 		height :24px;
 	}
-	
 	.getCloudKey div input{
 		width:calc(100% - 74px);
 		border:none;
@@ -295,11 +279,10 @@
 		font-style: normal;
 		height :18px;
 	}
-	
 	#key-message{
 		display:inline-block;
 		margin-top:2px;
-		color: rgb(164, 109 , 143); 
+		color: rgb(164, 109 , 143);
 		font-size :16px;
 		font-weight:bold;
 		width:90%;
@@ -307,21 +290,17 @@
 		margin: 2px 0 2px 0;
 		text-align:center;
 	}
-	
 	#fullScreenToggler{
 		display:none;
 	}
-	
 	.buttons .fas{
 		cursor:pointer
 	}
-	
-	@media (pointer: coarse) { 
+	@media (pointer: coarse) {
 		.mover{
 			display:none;
 		}
 	}
-	
 	@media screen and (max-width:299px){
 		ul{
 			display:none;
@@ -341,7 +320,6 @@
 			display:block;
 		}
 	}
-	
 	@media screen and (min-width: 300px) and (max-width: 640px) {
 		#fullScreenToggler{
 			text-align:center;
@@ -362,30 +340,25 @@
 		.icon-right{
 			position:absolute;
 			margin: 4px 8px 8px 8px;
-		}	
-		
+		}
 		.icon-right.icon-1{
 			right:0px;
-		}	
-		
+		}
 		.icon-right.icon-2{
 			right:30px;
 		}
-		
 		.icon-3{
 			float:left;
-		}	
-				
-		
+			margin-right:5px;
+		}
 		.btn-right{
 			position:absolute;
 			right:0px;
-		}	
+		}
 		.btn-left{
 			position:absolute;
 			left:20px;
 		}
-		
 		#showTasks{
 			margin-top : -26px;
 			position:absolute;
@@ -396,26 +369,26 @@
 			font-size:16px;
 			cursor:pointer;
 			display: block;
-		}		
+		}
 		#titleZone{
 			margin-top : -8px;
-			margin-bottom: 4px; 
-			font-size: 24px; 
-			color: rgb(109, 143, 164); 
-			font-weight: 900; 
+			margin-bottom: 4px;
+			font-size: 24px;
+			color: rgb(109, 143, 164);
+			font-weight: 900;
 			display: block;
 		}
 		#message{
 			position:absolute;
 			margin-top:2px;
-			color: rgb(164, 109 , 143); 
+			color: rgb(164, 109 , 143);
 			font-size :16px;
 			font-weight:900;
 			width:100%;
 			text-align:center;
 		}
 		#key-message{
-			color: rgb(164, 109 , 143); 
+			color: rgb(164, 109 , 143);
 			font-size :12px;
 			font-weight:normal;
 			text-align:left;
@@ -431,14 +404,13 @@
 			margin-left:20px;
 		}
 		.buttons .btn-right{
-			margin-right:calc(2% + 3px);		
+			margin-right:calc(2% + 3px);
 		}
 		.buttons .fas{
 			position:absolute;
 			margin-left:90px;
 		}
 	}
-	
 #loader {
   align-items: center;
   background-color: black;
@@ -451,7 +423,6 @@
   top: 0px;
   width: 100vw;
   z-index: 10000; }
-
 #loader_anim {
   border: 10px solid #f3f3f3;
   border-top: 10px solid #4285CE;
@@ -459,11 +430,9 @@
   width: 50px;
   height: 50px;
   animation: spin 0.7s linear infinite; }
-
 @keyframes spin {
   0% {
     transform: rotate(0deg); }
   100% {
-    transform: rotate(360deg); } 
+    transform: rotate(360deg); }
 }
-
