@@ -34,10 +34,9 @@
 					<i v-if="item.shoppingList!=null" class="far fa-check-square"></i> 
 				 </span>
 			 </span>
-
-				  <i class="fa fa-trash icon-right icon-1" @click="handleTrash(item)"></i>
-				  <i :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right icon-2" @click="handleHide(item)"></i>
-				  <i 
+				  <i  v-if="!item.editModeTitle" class="fa fa-trash icon-right icon-1" @click="handleTrash(item)"></i>
+				  <i  v-if="!item.editModeTitle" :class="{'fa-eye': item.done,'fa-eye-slash': !item.done}" class="fa icon-right icon-2" @click="handleHide(item)"></i>
+				  <i  v-if="!item.editModeTitle" 
 					:id="item.id" 
 					ondrop="drop(event)" 
 					ondragover="allowDrop(event)"

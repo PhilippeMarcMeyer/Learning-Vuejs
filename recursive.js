@@ -168,8 +168,14 @@ function loadVueComponent(){
 			  if(item.toDoSummary.length > 3){
 				  let arr = item.toDoSummary.split(/\r\n|\n|\r/);
 				  arr.forEach(function(x){
-					  if(x !="")
-					  item.shoppingList.push({"label":x,"done":false});
+					  if(x !=""){
+						 if(x.startsWith("[x] ")){
+							 x = x.substring(4);
+							item.shoppingList.push({"label":x,"done":true});
+						 }else{
+							item.shoppingList.push({"label":x,"done":false});
+						 }
+					  }
 				  });
 				
 			  }
@@ -177,7 +183,11 @@ function loadVueComponent(){
 			  if(item.shoppingList.length){
 				  item.toDoSummary = "";
 				  item.shoppingList.forEach(function(x){
-					  item.toDoSummary += x.label + "\r\n";
+					  if(x.done ){
+						item.toDoSummary += "[x] " + x.label + "\r\n";
+					  }else{
+						item.toDoSummary += x.label + "\r\n";
+					  }
 				  });
 			  }else{
 				  item.toDoSummary = "...";
@@ -634,3 +644,11 @@ window.onresize = function(){
 	}
 };
 
+if (!String.prototype.startsWith) {
+  Object.defineProperty(String.prototype, 'startsWith', {
+    value: function(search, pos) {
+      pos = !pos || pos < 0 ? 0 : +pos;
+      return this.substring(pos, pos + search.length) === search;
+    }
+  });
+}
